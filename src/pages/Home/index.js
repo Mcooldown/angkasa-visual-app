@@ -1,8 +1,9 @@
+import { Fragment } from "react"
+
 const Home = () => {
      return (
-          <div>
-               INI HOME               
-          </div>
+          <Fragment>
+          </Fragment>
      )
 }
 

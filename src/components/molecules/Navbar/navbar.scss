@@ -1,0 +1,21 @@
+.cNavbar {
+     background-color: white;
+     box-shadow: 0px 0px 4px rgba(15, 112, 183, 25%);
+     position: fixed;
+     width: 100%;
+
+     .cImageNavbar {
+          height: 70px;
+          width: 120px;
+          object-fit: cover;
+     }
+
+     .navbar-toggler {
+          border: 1px solid #0F70B7;
+          color: #0F70B7;
+
+          .navbar-toggler-icon {
+               height: 1.25em;
+          }
+     }
+}

@@ -1,0 +1,15 @@
+.cFooter {
+     background-color: #373737;
+     padding: 0.5rem 0;
+     color: white;
+
+     .cImageFooter {
+          height: 200px;
+          filter: brightness(0) invert(1);
+     }
+
+     .cLinkFooter {
+          text-decoration: none;
+          color: white;
+     }
+}

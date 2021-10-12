@@ -1,0 +1,28 @@
+.cButton {
+     border-radius: 5px;
+     font-weight: bold;
+     transition: 0.1s ease all;
+
+}
+
+.cButtonDefault {
+     border: 1px solid #0F70B7;
+     color: #0F70B7;
+     background-color: white;
+
+     &:hover {
+          color: #0F70B7;
+          transform: scale(1.03);
+     }
+}
+
+.cButtonVar2 {
+     background-color: #0F70B7;
+     color: white;
+     border: 1px solid #0F70B7;
+
+     &:hover {
+          color: white;
+          transform: scale(1.03);
+     }
+}
