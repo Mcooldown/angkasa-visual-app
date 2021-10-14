@@ -153,3 +153,8 @@
 .wrapper {
   min-height: 100vh;
 }
+
+.container-fluid {
+  padding-left: 30px !important;
+  padding-right: 30px !important;
+}

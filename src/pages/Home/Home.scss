@@ -6,13 +6,32 @@
 
 .cLandingContent {
      height: 100vh;
-}
-
-.cLandingText {
-     font-size: 72px;
-     font-weight: bold;
+     padding-top: 3rem;
 }
 
 .cRecentWorks {
-     padding: 6rem 0 10rem 0;
+     padding: 7rem 0 4rem 0;
+     background: url('../../assets/images/circleLinear.png') no-repeat;
+     background-position: 30% 7%;
+     background-size: 300px;
+}
+
+.cWhyAngkasa {
+     background: url('../../assets/images/circleHalf.png') no-repeat;
+     background-position: 100% top;
+     background-size: 450px;
+     padding: 5rem 0 10rem 0;
+}
+
+.cStatistics {
+     padding-bottom: 12rem;
+}
+
+.textStatistic {
+     font-size: 90px;
+     font-weight: bold;
+}
+
+.cLeaveMessage {
+     padding-bottom: 6rem;
 }

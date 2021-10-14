@@ -39,9 +39,9 @@ const Footer = () => {
                          </div>
                          <div className="col-lg-3 my-3">
 
-                                   <h4><i class="fas fa-map-marker-alt text-white"></i> Our Location</h4>
-                                   <Gap height={10} />
-                                   <p>Jl. Raya Kb. Jeruk No.27, RT.2/RW.9, Kb. Jeruk, Kec. Kb. Jeruk, Jakarta Barat, Daerah Khusus Ibukota Jakarta 11530</p>
+                              <h4><i class="fas fa-map-marker-alt text-white"></i> Our Location</h4>
+                              <Gap height={10} />
+                              <p>Jl. Raya Kb. Jeruk No.27, RT.2/RW.9, Kb. Jeruk, Kec. Kb. Jeruk, Jakarta Barat, Daerah Khusus Ibukota Jakarta 11530</p>
                          </div>
                     </div>
                </div>

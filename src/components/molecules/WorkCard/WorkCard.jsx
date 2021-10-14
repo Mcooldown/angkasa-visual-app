@@ -2,7 +2,7 @@ import { Sample } from "../../../assets";
 import { Gap } from "../../atoms";
 import "./WorkCard.scss";
 
-const WorkCard = ({title, description, image}) => {
+const WorkCard = ({ title, description, image }) => {
      return (
           <div className="cWorkCard card">
                <div className="card-img-top">
