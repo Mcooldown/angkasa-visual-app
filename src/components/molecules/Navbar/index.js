@@ -22,9 +22,13 @@ const Navbar = () => {
                               <Gap width={30} height={10} />
                               <Link to="/testimonies" className="textBlue1 text-decoration-none">Testimonies</Link>
                               <Gap width={30} height={10} />
-                              <Button title="Login" type={1} />
+                              <Button type={1}>
+                                   <h6 className="fw-bold m-0 p-1">Login</h6>
+                              </Button>
                               <Gap width={15} height={10} />
-                              <Button title="Register" type={2} />
+                              <Button type={2}>
+                                   <h6 className="fw-bold m-0 p-1">Register</h6>
+                              </Button>
                          </div>
                     </div>
                </div>
