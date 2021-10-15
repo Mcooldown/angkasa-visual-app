@@ -1,0 +1,51 @@
+.cAbout {
+     padding: 10rem 0 7rem 0;
+     background: url('../../assets/images/circleLinear.png') no-repeat;
+     background-size: 300px;
+     background-position: 60% 40%;
+}
+
+.cTeam {
+     padding: 4rem 0;
+     background: url('../../assets/images/circleLinear.png') no-repeat;
+     background-size: 200px;
+     background-position: 15% 25%;
+}
+
+.cImageSquare {
+     width: 100%;
+     padding-bottom: 100%;
+     position: relative;
+}
+
+.cImageSquare img {
+     position: absolute;
+     width: 100%;
+     height: 100%;
+     object-fit: cover;
+     border-radius: 50%;
+}
+
+.cLocation {
+     padding: 7rem 0 4rem 0;
+     background: url('../../assets/images/circleLinear.png') no-repeat;
+     background-size: 200px;
+     background-position: 60% 0%;
+}
+
+.cDesigners {
+     padding: 7rem 0 5rem 0;
+     background: url('../../assets/images/circleLinear.png') no-repeat;
+     background-size: 200px;
+     background-position: 60% 0%;
+}
+
+.cContactUs {
+     padding: 5rem 0 10rem 0;
+}
+
+.cCardContact {
+     background-image: linear-gradient(to bottom right, rgb(237, 249, 255), white);
+     padding: 1.5rem 1rem;
+     border-radius: 20px;
+}

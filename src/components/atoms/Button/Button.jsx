@@ -1,8 +1,8 @@
 import './button.scss';
 
-const Button = ({isLoading, type, children, ...rest}) => {
+const Button = ({ isLoading, type, children, isFull, ...rest }) => {
 
-     if(isLoading) return (
+     if (isLoading) return (
           <button className={"btn cButton d-flex align-items-center justify-content-center " + (type === 1 ? 'cButtonDefault' : (type === 2) ? 'cButtonVar2' : '')} disabled {...rest} >
                <span className="spinner-border" role="status">
                </span>
@@ -10,7 +10,7 @@ const Button = ({isLoading, type, children, ...rest}) => {
           </button>
      );
      else return (
-          <button className={"btn cButton  " + (type === 1 ? 'cButtonDefault' : (type === 2) ? 'cButtonVar2' : '')} {...rest} >
+          <button className={"btn cButton  " + (type === 1 ? 'cButtonDefault' : (type === 2) ? 'cButtonVar2' : '') + (isFull ? ' w-100' : '')} {...rest} >
                {children}
           </button>
      );

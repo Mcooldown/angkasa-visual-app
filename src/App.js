@@ -9,6 +9,7 @@ import '@fortawesome/fontawesome-free/scss/regular.scss';
 import { AboutUs, Home, OurServices, Testimonies } from './pages';
 import { Footer, Navbar } from './components/molecules';
 import { Fragment } from 'react';
+import 'react-owl-carousel2/src/owl.carousel.css';
 
 function App() {
   return (

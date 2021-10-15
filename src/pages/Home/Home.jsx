@@ -4,7 +4,6 @@ import { Button, Gap } from "../../components/atoms";
 import { LandingIllust, Send, Why1, Why2, Why3 } from "../../assets";
 import WorkCard from "../../components/molecules/WorkCard/WorkCard";
 import OwlCarousel from 'react-owl-carousel2';
-import 'react-owl-carousel2/src/owl.carousel.css'; //Allows for server-side rendering.
 
 const Home = () => {
 

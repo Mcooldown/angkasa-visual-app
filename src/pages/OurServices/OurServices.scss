@@ -1,0 +1,38 @@
+.cOurServices {
+     padding: 14rem 0;
+     background: url('../../assets/images/circleLinear.png') no-repeat;
+     background-size: 150px;
+     background-position: 40% 35%;
+}
+
+.cGraphicDesign {
+     padding-top: 12rem;
+     padding-bottom: 8rem;
+     background: url('../../assets/images/graphicDesignWhite.png') no-repeat,
+          linear-gradient(to bottom, rgb(255, 255, 255) 0%, rgba(61, 191, 246, 0.74) 20%, rgb(255, 255, 255) 60%);
+     background-size: 800px, cover;
+     background-position: 0% -20%, center center;
+}
+
+.cVideoAnimation {
+     padding-top: 12rem;
+     padding-bottom: 8rem;
+     background: url('../../assets/images/videoAnimationWhite.png') no-repeat,
+          linear-gradient(to bottom, rgb(255, 255, 255) 0%, rgba(61, 191, 246, 0.74) 20%, rgb(255, 255, 255) 60%);
+     background-size: 800px, cover;
+     background-position: 100% -20%, center center;
+}
+
+.cTechDesign {
+     padding-top: 12rem;
+     padding-bottom: 12rem;
+     background: url('../../assets/images/techDesignWhite.png') no-repeat,
+          linear-gradient(to bottom, rgb(255, 255, 255) 0%, rgba(61, 191, 246, 0.74) 20%, rgb(255, 255, 255) 60%);
+     background-size: 800px, cover;
+     background-position: 0% -20%, center center;
+}
+
+.cTitleCarousel {
+     font-size: 90px;
+     font-weight: bold;
+}
