@@ -1,29 +1,11 @@
 import { Fragment } from "react";
-import { Adie, Kathleen, Michele, Putu, Sample, Vincent } from "../../assets";
+import { Adie, Kathleen, Logo, Michele, Putu, Vincent } from "../../assets";
 import { Gap } from "../../components/atoms";
 import "./AboutUs.scss";
-import OwlCarousel from 'react-owl-carousel2';
-import DesignerCard from "../../components/molecules/DesignerCard/DesignerCard";
 import { Button } from "../../components/atoms";
+import { TestimonyCard } from "../../components/molecules";
 
 const AboutUs = () => {
-
-     const optionsDesigners = {
-          items: 2,
-          center: true,
-          stagePadding: 20,
-          margin: 50,
-          autoplay: true,
-          loop: true,
-          responsive: {
-               0: {
-                    items: 1
-               },
-               600: {
-                    items: 2
-               }
-          }
-     };
 
      return (
           <Fragment>
@@ -31,7 +13,7 @@ const AboutUs = () => {
                     <div className="container-fluid">
                          <div className="row justify-content-between align-items-center">
                               <div className="col-lg-7 pe-lg-5 my-3">
-                                   <img src={Sample} className="w-100" alt="" />
+                                   <img src={Logo} className="w-100 cImgLogo" alt="" />
                               </div>
                               <div className="col-lg-5 my-3">
                                    <h1 className="heading1 textBlue1">ABOUT US</h1>
@@ -120,17 +102,47 @@ const AboutUs = () => {
                          </div>
                     </div>
                </div>
-               <div className="cDesigners">
-                    <h1 className="heading1 textBlue1 text-center">OUR DESIGNERS</h1>
-                    <Gap height={30} />
-                    <p className="paragraph textBlue1 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis urna laoreet commodo scelerisque at sem. Vestibulum fringilla at duis proin aliquam facilisi tempor. In nunc diam lorem id arcu amet.</p>
-                    <Gap height={50} />
-                    <OwlCarousel options={optionsDesigners}>
-                         <DesignerCard key={1} name="Designer 1" specialty="Web Designer" description="halo halo binus halo halo binus halo halo binus" />
-                         <DesignerCard key={2} name="Designer 2" specialty="Graphic Designer" description="halo halo binus halo halo binus halo halo binus" />
-                         <DesignerCard key={3} name="Designer 3" specialty="Animator" description="halo halo binus halo halo binus halo halo binus" />
-                    </OwlCarousel>
+               <div className="cTestimonies">
+                    <div className="container-fluid">
+                         <h1 className="title textBlue1 text-center">OUR TESTIMONIES</h1>
+                         <Gap height={20} />
+                         <p className="paragraph textBlue1 text-center">
+                              Let’s hear what they say about Angkasa Visual Works!
+                         </p>
+                         <Gap height={40} />
+                         <div className="cTestimoniesWrapper card">
+                              <div className="card-body my-3">
+                                   <div className="card cTestimoniesHeader">
+                                        <div className="card-body my-2 d-flex justify-content-between align-items-center">
+                                             <h3 className="subHeading2 m-0">Testimonies</h3>
+                                             <div className="d-flex">
+                                                  <i className="fa fa-chevron-down fa-2x"></i>
+                                                  <Gap width={70} />
+                                                  <i className="fa fa-minus fa-2x"></i>
+                                                  <Gap width={30} />
+                                                  <i className="fa fa-square fa-2x"></i>
+                                                  <Gap width={30} />
+                                                  <i className="fa fa-times fa-2x"></i>
+                                             </div>
+                                        </div>
+                                   </div>
+                                   <Gap height={30} />
+                                   <TestimonyCard name="Budi" gender="Male" age="20"
+                                        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu pretium urna. Maecenas ut enim at lectus facilisis consectetur non vitae leo. Fusce auctor eget dolor ac congue. Suspendisse gravida quis lorem dictum aliquet. Curabitur sed velit ut augue dapibus pretium. Fusce ipsum tortor, dapibus a metus eget, fringilla iaculis risus. Vivamus consequat rutrum commodo. Nullam semper libero lectus, ut varius urna aliquet eget." />
+                                   <Gap height={30} />
+                                   <TestimonyCard name="Andi" gender="Male" age="20" leftSideImage
+                                        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu pretium urna. Maecenas ut enim at lectus facilisis consectetur non vitae leo. Fusce auctor eget dolor ac congue. Suspendisse gravida quis lorem dictum aliquet. Curabitur sed velit ut augue dapibus pretium. Fusce ipsum tortor, dapibus a metus eget, fringilla iaculis risus. Vivamus consequat rutrum commodo. Nullam semper libero lectus, ut varius urna aliquet eget." />
+                                   <Gap height={30} />
+                                   <TestimonyCard name="Rini" gender="Female" age="20"
+                                        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu pretium urna. Maecenas ut enim at lectus facilisis consectetur non vitae leo. Fusce auctor eget dolor ac congue. Suspendisse gravida quis lorem dictum aliquet. Curabitur sed velit ut augue dapibus pretium. Fusce ipsum tortor, dapibus a metus eget, fringilla iaculis risus. Vivamus consequat rutrum commodo. Nullam semper libero lectus, ut varius urna aliquet eget." />
+                                   <Gap height={30} />
+                                   <TestimonyCard name="Toni" gender="Male" age="20" leftSideImage
+                                        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu pretium urna. Maecenas ut enim at lectus facilisis consectetur non vitae leo. Fusce auctor eget dolor ac congue. Suspendisse gravida quis lorem dictum aliquet. Curabitur sed velit ut augue dapibus pretium. Fusce ipsum tortor, dapibus a metus eget, fringilla iaculis risus. Vivamus consequat rutrum commodo. Nullam semper libero lectus, ut varius urna aliquet eget." />
+                              </div>
+                         </div>
+                    </div>
                </div>
+
                <div className="cContactUs">
                     <div className="container-fluid">
                          <div className="row align-items-center justify-content-between">

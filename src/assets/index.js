@@ -5,12 +5,16 @@ import Why1 from "./images/why1.png";
 import Why2 from "./images/why2.png";
 import Why3 from "./images/why3.png";
 import Send from "./images/send.png";
-import Adie from "./images/adie.jpg";
-import Michele from "./images/michele.jpg";
-import Vincent from "./images/vincent.jpg";
+import Adie from "./images/adie.png";
+import Michele from "./images/michele.png";
+import Vincent from "./images/vincent.png";
 import Putu from "./images/putu.png";
 import Kathleen from "./images/kathleen.png";
 import DefaultProfile from "./images/defaultProfilePhoto.jpg";
+import GraphicDesign from "./images/graphicDesign.png";
+import TechDesign from "./images/techDesign.png";
+import VideoAnimation from "./images/videoAnimation.png";
 
 export {Logo, LandingIllust, Sample, Why1, Why2, Why3, Send,
-Adie, Michele, Vincent, Putu, Kathleen, DefaultProfile};
+Adie, Michele, Vincent, Putu, Kathleen, DefaultProfile,
+GraphicDesign, TechDesign, VideoAnimation};

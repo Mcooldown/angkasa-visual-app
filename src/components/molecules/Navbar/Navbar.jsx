@@ -20,8 +20,6 @@ const Navbar = () => {
                               <Gap width={30} height={10} />
                               <Link to="/our-services" className="textBlue1 text-decoration-none">Our Services</Link>
                               <Gap width={30} height={10} />
-                              <Link to="/testimonies" className="textBlue1 text-decoration-none">Testimonies</Link>
-                              <Gap width={30} height={10} />
                               <Button type={1}>
                                    <h6 className="fw-bold m-0 p-1">Login</h6>
                               </Button>

@@ -2,8 +2,8 @@ import { Fragment } from "react";
 import { Gap, Button } from "../../components/atoms";
 import "./OurServices.scss";
 import OwlCarousel from "react-owl-carousel2";
-import ServiceCard from "../../components/molecules/ServiceCard/ServiceCard";
-import { Send } from "../../assets";
+import { ServiceCard } from "../../components/molecules";
+import { GraphicDesign, Send, TechDesign, VideoAnimation } from "../../assets";
 
 const OurServices = () => {
 
@@ -38,13 +38,16 @@ const OurServices = () => {
                                    <Gap height={60} />
                                    <div className="row text-center align-items-start">
                                         <div className="col-md-4 col-10">
+                                             <img src={GraphicDesign} className="w-100" alt="" />
                                              <h1 className="heading2 textBlue1">GRAPHIC DESIGN</h1>
                                         </div>
                                         <div className="col-md-4 col-10">
+                                             <img src={VideoAnimation} className="w-100" alt="" />
                                              <h1 className="heading2 textBlue1">VIDEO &#38; ANIMATION</h1>
                                         </div>
                                         <div className="col-md-4 col-10">
-                                             <h1 className="heading2 textBlue1">GRAPHIC DESIGN</h1>
+                                             <img src={TechDesign} className="w-100" alt="" />
+                                             <h1 className="heading2 textBlue1">TECH DESIGN</h1>
                                         </div>
                                    </div>
                               </div>

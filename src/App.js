@@ -6,7 +6,7 @@ import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
 import '@fortawesome/fontawesome-free/scss/brands.scss';
 import '@fortawesome/fontawesome-free/scss/solid.scss';
 import '@fortawesome/fontawesome-free/scss/regular.scss';
-import { AboutUs, Home, OurServices, Testimonies } from './pages';
+import { AboutUs, Home, OurServices} from './pages';
 import { Footer, Navbar } from './components/molecules';
 import { Fragment } from 'react';
 import 'react-owl-carousel2/src/owl.carousel.css';
@@ -26,9 +26,6 @@ function App() {
               </Route>
               <Route path="/our-services" exact>
                     <OurServices />
-              </Route>
-              <Route path="/testimonies" exact>
-                    <Testimonies />
               </Route>
           </Switch>
         </div>

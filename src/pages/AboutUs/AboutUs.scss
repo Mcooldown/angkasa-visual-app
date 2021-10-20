@@ -1,12 +1,18 @@
 .cAbout {
-     padding: 10rem 0 7rem 0;
+     padding-top: 10rem;
      background: url('../../assets/images/circleLinear.png') no-repeat;
      background-size: 300px;
      background-position: 60% 40%;
 }
 
+.cImgLogo {
+     width: 100%;
+     max-height: 600px;
+     object-fit: cover;
+}
+
 .cTeam {
-     padding: 4rem 0;
+     padding: 7rem 0;
      background: url('../../assets/images/circleLinear.png') no-repeat;
      background-size: 200px;
      background-position: 15% 25%;
@@ -27,14 +33,7 @@
 }
 
 .cLocation {
-     padding: 7rem 0 4rem 0;
-     background: url('../../assets/images/circleLinear.png') no-repeat;
-     background-size: 200px;
-     background-position: 60% 0%;
-}
-
-.cDesigners {
-     padding: 7rem 0 5rem 0;
+     padding: 7rem 0;
      background: url('../../assets/images/circleLinear.png') no-repeat;
      background-size: 200px;
      background-position: 60% 0%;
@@ -48,4 +47,22 @@
      background-image: linear-gradient(to bottom right, rgb(237, 249, 255), white);
      padding: 1.5rem 1rem;
      border-radius: 20px;
+}
+
+.cTestimonies {
+     padding: 7rem 0;
+     background: url('../../assets/images/circleLinear.png') no-repeat;
+     background-size: 200px;
+     background-position: 70% 0%;
+}
+
+.cTestimoniesWrapper {
+     background-color: #0F70B7;
+     border-radius: 20px;
+     border: none;
+     padding: 1rem 0.5rem;
+}
+
+.cTestimoniesHeader {
+     border-radius: 10px;
 }
