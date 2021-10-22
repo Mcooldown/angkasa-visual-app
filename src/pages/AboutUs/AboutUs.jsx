@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Adie, Kathleen, Logo, Michele, Putu, Vincent } from "../../assets";
-import { Gap } from "../../components/atoms";
+import { Gap, Input, Select } from "../../components/atoms";
 import "./AboutUs.scss";
 import { Button } from "../../components/atoms";
 import { TestimonyCard } from "../../components/molecules";
@@ -155,40 +155,15 @@ const AboutUs = () => {
                                         <div className="card-body">
 
                                              {/* Form */}
-                                             <div className="row">
-                                                  <label htmlFor="name" className="col-lg-4"><h1 class="paragraph fw-bold">Name</h1></label>
-                                                  <div className="col-lg-8">
-                                                       <input type="text" className="form-control" />
-                                                  </div>
-                                             </div>
+                                             <Input type="text" label="Name" id="name" name="name" placeholder="Input your name here" />
                                              <Gap height={30} />
-                                             <div className="row">
-                                                  <label htmlFor="email" className="col-lg-4"><h1 class="paragraph fw-bold">E-mail</h1></label>
-                                                  <div className="col-lg-8">
-                                                       <input type="text" className="form-control" />
-                                                  </div>
-                                             </div>
+                                             <Input type="text" label="Email" id="email" name="email" placeholder="Input your email here" />
                                              <Gap height={30} />
-                                             <div className="row">
-                                                  <label htmlFor="subject" className="col-lg-4"><h1 class="paragraph fw-bold">Subject</h1></label>
-                                                  <div className="col-lg-8">
-                                                       <input type="text" className="form-control" />
-                                                  </div>
-                                             </div>
+                                             <Select label="Subject" id="subject" name="subject" options={['1', '2']} required />
                                              <Gap height={30} />
-                                             <div className="row">
-                                                  <label htmlFor="subject" className="col-lg-4"><h1 class="paragraph fw-bold">Phone Number</h1></label>
-                                                  <div className="col-lg-8">
-                                                       <input type="text" className="form-control" />
-                                                  </div>
-                                             </div>
+                                             <Input type="text" label="Phone Number" id="phoneNumber" name="phoneNumber" placeholder="08xxxxx" />
                                              <Gap height={30} />
-                                             <div className="row">
-                                                  <label htmlFor="subject" className="col-lg-4"><h1 class="paragraph fw-bold">Message</h1></label>
-                                                  <div className="col-lg-8">
-                                                       <input type="text" className="form-control" />
-                                                  </div>
-                                             </div>
+                                             <Input type="text" label="Message" id="message" name="message" placeholder="Input your message here" />
                                              <Gap height={30} />
                                              <div className="row">
                                                   <label htmlFor="file" className="col-lg-4"><h1 class="paragraph fw-bold">File</h1></label>

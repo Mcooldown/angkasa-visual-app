@@ -14,7 +14,10 @@ import DefaultProfile from "./images/defaultProfilePhoto.jpg";
 import GraphicDesign from "./images/graphicDesign.png";
 import TechDesign from "./images/techDesign.png";
 import VideoAnimation from "./images/videoAnimation.png";
+import DesignerSymbol from "./images/designerSymbol.png";
+import CustomerSymbol from "./images/customerSymbol.png";
+import RegisterSuccess from "./images/registerSuccess.png";
 
 export {Logo, LandingIllust, Sample, Why1, Why2, Why3, Send,
 Adie, Michele, Vincent, Putu, Kathleen, DefaultProfile,
-GraphicDesign, TechDesign, VideoAnimation};
+GraphicDesign, TechDesign, VideoAnimation, DesignerSymbol, CustomerSymbol, RegisterSuccess};
