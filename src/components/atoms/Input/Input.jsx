@@ -1,6 +1,6 @@
 import "./Input.scss";
 
-const Input = ({ label, id, type, ...rest }) => {
+const Input = ({ label, id, type, error, ...rest }) => {
      return (
           <div className="row align-items-center">
                {
@@ -10,7 +10,11 @@ const Input = ({ label, id, type, ...rest }) => {
                     </label>
                }
                <div className={label ? "col-lg-8" : "col-lg-12"}>
-                    <input type={type} className="form-control cFormInput" id={id} {...rest} />
+                    <input type={type} className={"form-control cFormInput" + (error ? ' is-invalid' : '')} id={id} {...rest} />
+                    {
+                         error &&
+                         <small className="text-danger">{error}</small>
+                    }
                </div>
           </div>
      )

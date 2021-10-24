@@ -1,0 +1,21 @@
+.cCardRole {
+     border-radius: 20px;
+     color: #0F70B7;
+     background-image: linear-gradient(to bottom, #D8F3FF, white);
+     padding: 2rem;
+     cursor: pointer;
+     transition: 0.2s ease all;
+     box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
+}
+
+.cImageRole {
+     width: 100%;
+     height: 300px;
+     object-fit: contain;
+}
+
+.cCardRole.selected {
+     transform: scale(1.02);
+     color: white !important;
+     background-image: linear-gradient(to bottom, #0F70B7, white) !important;
+}

@@ -1,4 +1,4 @@
-const Select = ({ label, id, options, ...rest }) => {
+const Select = ({ label, id, options, error, ...rest }) => {
      return (
           <div className="row align-items-center">
                {
@@ -8,7 +8,7 @@ const Select = ({ label, id, options, ...rest }) => {
                     </label>
                }
                <div className={label ? "col-lg-8" : "col-lg-12"}>
-                    <select className="form-select cFormInput" id={id} {...rest} >
+                    <select className={"form-select cFormInput" + (error ? ' is-invalid' : '')} id={id} {...rest} >
                          {
                               options.map(optionItem => {
                                    return (
@@ -17,6 +17,10 @@ const Select = ({ label, id, options, ...rest }) => {
                               })
                          }
                     </select>
+                    {
+                         error &&
+                         <small className="text-danger">{error}</small>
+                    }
                </div>
           </div>
      )

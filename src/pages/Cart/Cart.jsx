@@ -7,6 +7,20 @@ import "./Cart.scss";
 const Cart = () => {
 
      const history = useHistory();
+     // const [cartItems, setCartItems] = useState(null);
+
+     // Edit 1 item cart
+     // const [editedId, setEditedId] = useState(null);
+     // const [editedName, setEditedName] = useState(null);
+     // const [editedPrice, setEditedPrice] = useState(null);
+     // const [editedPackage, setEditedPackage] = useState(null);
+     // const [editedType, setEditedType] = useState(null);
+     // const [editedQuantity, setEditedQuantity] = useState(null);
+     // const [editedDetailRequestLink, setEditedDetailRequestLink] = useState(null);
+     // const [editedPreferredDesigner, setEditedPreferredDesigner] = useState(null);
+     // const [editedNotes, setEditedNotes] = useState(null);
+     // const [editedEstimatedTime, setEditedEstimatedTime] = useState(null);
+
 
      return (
           <Fragment>
@@ -27,16 +41,14 @@ const Cart = () => {
                                                        <Gap height={5} />
                                                        <p className="paragraph">Rp 50.000 - Rp 100.000</p>
                                                        <Gap height={15} />
-                                                       <Select label="Dimension" id="dimension" options={['150 x 100 px']} name="dimension" />
+                                                       <Select label="Type" id="type" options={['Typhography']} name="type" />
                                                        <Gap height={10} />
-                                                       <Select label="Preferred Style" id="preferredStyle" options={['Typography']} name="preferredStyle" />
-                                                       <Gap height={10} />
-                                                       <Input type="number" label="Quantity" id="quantity" name="quantity" />
+                                                       <Input type="number" label="Quantity" id="quantity" name="quantity" min={1} />
                                                   </div>
                                              </div>
                                         </div>
                                         <div className="col-lg-3 my-3 text-end">
-                                             <Select id="package" options={['Sky Package']} name="package" />
+                                             <Select id="package" options={['Sky Package', 'Space Package', 'Universe Package']} name="package" />
                                              <Gap height={15} />
                                              <p className="fst-italic">Estimated processing time: <b>3 days</b></p>
                                              <Gap height={10} />
@@ -48,6 +60,9 @@ const Cart = () => {
                                         </div>
                                    </div>
                                    <hr />
+                                   <Gap height={20} />
+                                   <Input label="Detail Request Link" placeholder="Put your request file (word/pdf) at google drive and copy the link here"
+                                        name="requestFileLink" id="requestFileLink" type="text" />
                                    <Gap height={20} />
                                    <Select label="Preferred Designer" id="preferredDesigner" name="preferredDesigner" options={["Andi", "Budi"]} />
                                    <Gap height={20} />

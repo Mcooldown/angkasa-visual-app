@@ -29,19 +29,19 @@ const Checkout = () => {
                                                        <img src={Sample} className="w-100" alt="" />
                                                   </div>
                                                   <div className="col-lg-7 my-3 ps-lg-5">
-                                                       <h1 className="subHeading2 textBlue1">Logo Design - Sky Package</h1>
+                                                       <h1 className="subHeading2 textBlue1">Logo Design</h1>
                                                        <Gap height={5} />
                                                        <p className="paragraph">Rp 50.000 - Rp 100.000</p>
                                                        <Gap height={15} />
-                                                       <Select label="Dimension" id="dimension" options={['150 x 100 px']} name="dimension" disabled />
+                                                       <Select label="Type" id="type" options={['Typhography']} name="type" />
                                                        <Gap height={10} />
-                                                       <Select label="Preferred Style" id="preferredStyle" options={['Typography']} name="preferredStyle" disabled />
-                                                       <Gap height={10} />
-                                                       <Input type="number" label="Quantity" id="quantity" name="quantity" disabled />
+                                                       <Input type="number" label="Quantity" id="quantity" name="quantity" min={1} />
                                                   </div>
                                              </div>
                                         </div>
                                         <div className="col-lg-3 my-3 text-end">
+                                             <Select id="package" options={['Sky Package', 'Space Package', 'Universe Package']} name="package" />
+                                             <Gap height={15} />
                                              <p className="fst-italic">Estimated processing time: <b>3 days</b></p>
                                              <Gap height={10} />
                                              <h1 className="subHeading2 text-danger">Rp 50.000 - Rp 100.000</h1>
@@ -53,9 +53,12 @@ const Checkout = () => {
                                    </div>
                                    <hr />
                                    <Gap height={20} />
-                                   <Select label="Preferred Designer" id="preferredDesigner" name="preferredDesigner" options={["Andi", "Budi"]} disabled />
+                                   <Input label="Detail Request Link" placeholder="Put your request file (word/pdf) at google drive and copy the link here"
+                                        name="requestFileLink" id="requestFileLink" type="text" />
                                    <Gap height={20} />
-                                   <Input label="Notes" id="notes" name="notes" type="text" disabled />
+                                   <Select label="Preferred Designer" id="preferredDesigner" name="preferredDesigner" options={["Andi", "Budi"]} />
+                                   <Gap height={20} />
+                                   <Input label="Notes" id="notes" name="notes" type="text" />
                               </div>
                          </div>
                     </div>

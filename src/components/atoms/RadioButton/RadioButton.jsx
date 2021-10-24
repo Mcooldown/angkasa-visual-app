@@ -1,7 +1,7 @@
 import { Fragment } from "react"
 import { Gap } from "..";
 
-const RadioButton = ({ id, options, label, ...rest }) => {
+const RadioButton = ({ id, options, label, error, value, ...rest }) => {
      return (
           <Fragment>
                <div className="row align-items-center">
@@ -18,7 +18,7 @@ const RadioButton = ({ id, options, label, ...rest }) => {
                                         <Fragment>
                                              <div className="form-check">
                                                   <input className="form-check-input" type="radio" id={id}
-                                                       {...rest} value={optionItem} />
+                                                       value={optionItem} checked={optionItem === value} {...rest} />
                                                   <label className="form-check-label" for={id}>
                                                        {optionItem}
                                                   </label>
@@ -27,6 +27,10 @@ const RadioButton = ({ id, options, label, ...rest }) => {
                                         </Fragment>
                                    )
                               })
+                         }
+                         {
+                              error &&
+                              <small className="text-danger">{error}</small>
                          }
                     </div>
                </div>
