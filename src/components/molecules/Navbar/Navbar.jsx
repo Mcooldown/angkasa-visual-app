@@ -26,13 +26,22 @@ const Navbar = () => {
                                    <Gap width={30} height={10} />
                                    <Link to="/our-services" className="textBlue1 text-decoration-none">Our Services</Link>
                                    <Gap width={30} height={10} />
-                                   <Button type={1} onClick={() => setIsLogin(true)} data-bs-toggle="modal" data-bs-target="#authModal">
-                                        <h6 className="fw-bold m-0 p-1">Login</h6>
-                                   </Button>
-                                   <Gap width={15} height={10} />
-                                   <Button type={2} onClick={() => setIsLogin(false)} data-bs-toggle="modal" data-bs-target="#authModal">
-                                        <h6 className="fw-bold m-0 p-1">Register</h6>
-                                   </Button>
+                                   {
+                                        localStorage.getItem('token') ?
+                                             <Button type={1} data-bs-toggle="modal" data-bs-target="#authModal">
+                                                  <h6 className="fw-bold m-0 p-1">Logout</h6>
+                                             </Button>
+                                             :
+                                             <Fragment>
+                                                  <Button type={1} onClick={() => setIsLogin(true)} data-bs-toggle="modal" data-bs-target="#authModal">
+                                                       <h6 className="fw-bold m-0 p-1">Login</h6>
+                                                  </Button>
+                                                  <Gap width={15} height={10} />
+                                                  <Button type={2} onClick={() => setIsLogin(false)} data-bs-toggle="modal" data-bs-target="#authModal">
+                                                       <h6 className="fw-bold m-0 p-1">Register</h6>
+                                                  </Button>
+                                             </Fragment>
+                                   }
                               </div>
                          </div>
                     </div>

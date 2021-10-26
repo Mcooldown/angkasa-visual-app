@@ -1,6 +1,5 @@
 import React from 'react'
-import { Fragment } from 'react';
-import { useState } from 'react/cjs/react.development';
+import { Fragment, useState } from 'react';
 import { Gap, Input, Button } from '../../atoms';
 import "./Login.scss";
 

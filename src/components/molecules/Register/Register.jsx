@@ -1,5 +1,4 @@
-import { Fragment } from "react";
-import { useState } from "react/cjs/react.development";
+import { Fragment, useState } from "react";
 import { CustomerSymbol, DesignerSymbol, RegisterSuccess } from "../../../assets";
 import { Gap, Input, Select, Button } from "../../atoms";
 import RadioButton from "../../atoms/RadioButton/RadioButton";
@@ -7,7 +6,9 @@ import "./Register.scss";
 
 const Register = ({ changeSection }) => {
 
+     const [isLoading, setIsLoading] = useState(false);
      const [registerSection, setRegisterSection] = useState(1);
+     const urlAPI = process.env.REACT_APP_API_URL;
 
      // Register Form
      const [name, setName] = useState('');
@@ -98,7 +99,15 @@ const Register = ({ changeSection }) => {
 
      const handleSelectRole = () => {
           if (isDesigner) setRegisterSection(3);
-          else if (isCustomer) setRegisterSection(4);
+          else if (isCustomer) {
+               addUserToAPI().then((res) => {
+                    if (res) {
+                         setRegisterSection(4);
+                    } else {
+                         setIsLoading(false);
+                    }
+               });
+          };
      }
 
      const handleSubmitDesignerData = () => {
@@ -126,7 +135,46 @@ const Register = ({ changeSection }) => {
                pass = false;
           }
 
-          pass && setRegisterSection(4);
+          if (pass) {
+               addUserToAPI().then(userId => {
+                    addDesignerToAPI(userId).then(() => {
+                         setRegisterSection(5);
+                    });
+               })
+          }
+     }
+
+     const addUserToAPI = async () => {
+          setIsLoading(true);
+
+          fetch(urlAPI + 'register', {
+               method: 'POST',
+               headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+               },
+               body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    phone_number: phoneNumber,
+                    dob: dateOfBirth,
+                    address: address,
+                    password: password,
+                    id_card: "",
+                    is_designer: isDesigner,
+                    is_customer: isCustomer,
+               })
+          }).then(res => {
+               console.log(res);
+               return true;
+          }).catch(err => {
+               console.log(err);
+               return false;
+          });
+     }
+
+     const addDesignerToAPI = async (userId) => {
+
      }
 
      return (
@@ -183,73 +231,88 @@ const Register = ({ changeSection }) => {
                          :
                          registerSection === 2 ?
                               <Fragment>
-                                   <h1 className="heading2 textBlue1 text-center">
-                                        CHOOSE YOUR ROLE (S)
-                                   </h1>
-                                   <Gap height={80} />
-                                   <div className="row">
-                                        <div className="col-lg-6">
-                                             <div className={"cCardRole " + (isDesigner ? "selected" : "")} onClick={() => setIsDesigner(!isDesigner)}>
-                                                  <h1 className="subHeading2 text-center">DESIGNER</h1>
-                                                  <Gap height={20} />
-                                                  <img src={DesignerSymbol} className="cImageRole" alt="designerSymbol" />
-                                             </div>
-                                        </div>
-                                        <div className="col-lg-6">
-                                             <div className={"cCardRole " + (isCustomer ? "selected" : "")} onClick={() => setIsCustomer(!isCustomer)}>
-                                                  <h1 className="subHeading2 text-center">CUSTOMER</h1>
-                                                  <Gap height={20} />
-                                                  <img src={CustomerSymbol} className="cImageRole" alt="customerSymbol" />
-                                             </div>
-                                        </div>
-                                   </div>
-                                   <Gap height={60} />
-                                   <div className="row justify-content-center">
-                                        {
-                                             (isDesigner || isCustomer) &&
-                                             <div className="col-md-6 order-md-2">
-                                                  <Button isFull type={2} onClick={handleSelectRole}>
-                                                       <h5 className="text-white subHeading3 m-1">NEXT</h5>
-                                                  </Button>
-                                             </div>
-                                        }
-                                        <div className="col-md-6 order-md-1">
-                                             <Button isFull type={1} onClick={() => setRegisterSection(1)}>
-                                                  <h5 className="subHeading3 m-1">BACK</h5>
-                                             </Button>
-                                        </div>
-                                   </div>
+                                   {
+                                        !isLoading ?
+                                             <Fragment>
+
+                                                  <h1 className="heading2 textBlue1 text-center">
+                                                       CHOOSE YOUR ROLE (S)
+                                                  </h1>
+                                                  <Gap height={80} />
+                                                  <div className="row">
+                                                       <div className="col-lg-6">
+                                                            <div className={"cCardRole " + (isDesigner ? "selected" : "")} onClick={() => setIsDesigner(!isDesigner)}>
+                                                                 <h1 className="subHeading2 text-center">DESIGNER</h1>
+                                                                 <Gap height={20} />
+                                                                 <img src={DesignerSymbol} className="cImageRole" alt="designerSymbol" />
+                                                            </div>
+                                                       </div>
+                                                       <div className="col-lg-6">
+                                                            <div className={"cCardRole " + (isCustomer ? "selected" : "")} onClick={() => setIsCustomer(!isCustomer)}>
+                                                                 <h1 className="subHeading2 text-center">CUSTOMER</h1>
+                                                                 <Gap height={20} />
+                                                                 <img src={CustomerSymbol} className="cImageRole" alt="customerSymbol" />
+                                                            </div>
+                                                       </div>
+                                                  </div>
+                                                  <Gap height={60} />
+                                                  <div className="row justify-content-center">
+                                                       {
+                                                            (isDesigner || isCustomer) &&
+                                                            <div className="col-md-6 order-md-2">
+                                                                 <Button isFull type={2} onClick={handleSelectRole}>
+                                                                      <h5 className="text-white subHeading3 m-1">NEXT</h5>
+                                                                 </Button>
+                                                            </div>
+                                                       }
+                                                       <div className="col-md-6 order-md-1">
+                                                            <Button isFull type={1} onClick={() => setRegisterSection(1)}>
+                                                                 <h5 className="subHeading3 m-1">BACK</h5>
+                                                            </Button>
+                                                       </div>
+                                                  </div>
+                                             </Fragment>
+                                             :
+                                             <p>Please wait...</p>
+                                   }
                               </Fragment>
                               : registerSection === 3 ?
                                    <Fragment>
-                                        <h1 className="heading2 textBlue1 text-center">
-                                             REGISTER AS A DESIGNER
-                                        </h1>
-                                        <Gap height={80} />
-                                        <div className="card cCardAuth">
-                                             <div className="card-body">
-                                                  <Input type="text" id="resume" name="resume" label="Resume Link" placeholder="Upload your resume link here"
-                                                       value={resume} onChange={(e) => { setResume(e.target.value); setErrResume(null); }} error={errResume} />
-                                                  <Gap height={20} />
-                                                  <Input type="text" id="portfolioLink" name="portfolioLink" label="Portfolio Link" placeholder="Upload your portfolio link here"
-                                                       value={portfolioLink} onChange={(e) => { setPortfolioLink(e.target.value); setErrPortfolioLink(null); }} error={errPortfolioLink} />
-                                                  <Gap height={20} />
-                                                  <Select id="bankAccount" name="bankAccount" label="Bank Account" options={["BCA", "BNI", "BRI", "Mandiri", "CIMB Niaga"]}
-                                                       value={bankAccount} onChange={(e) => { setBankAccount(e.target.value); setErrBankAccount(null); }} error={errBankAccount} />
-                                                  <Gap height={20} />
-                                                  <Input type="text" id="accountName" name="accountName" label="Account Name"
-                                                       value={accountName} onChange={(e) => { setAccountName(e.target.value); setErrAccountName(null); }} error={errAccountName} />
-                                                  <Gap height={20} />
-                                                  <Input type="text" id="accountNumber" name="accountNumber" label="Account Number" placeholder="527xxxxxxx"
-                                                       value={accountNumber} onChange={(e) => { setAccountNumber(e.target.value); setErrAccountNumber(null); }} error={errAccountNumber} />
-                                             </div>
-                                        </div>
-                                        <Gap height={40} />
-                                        <Button isFull type={2} onClick={handleSubmitDesignerData}>
-                                             <h5 className="text-white subHeading3">LET'S BECOME OUR DESIGNERS</h5>
-                                        </Button>
-                                        <Gap height={20} />
-                                        <p className="text-center paragraph">I just want to be a customer <u className="textBlue1 fw-bold" onClick={() => setRegisterSection(2)}>Choose My Role</u></p>
+                                        {
+                                             !isLoading ?
+                                                  <Fragment>
+                                                       <h1 className="heading2 textBlue1 text-center">
+                                                            REGISTER AS A DESIGNER
+                                                       </h1>
+                                                       <Gap height={80} />
+                                                       <div className="card cCardAuth">
+                                                            <div className="card-body">
+                                                                 <Input type="text" id="resume" name="resume" label="Resume Link" placeholder="Upload your resume link here"
+                                                                      value={resume} onChange={(e) => { setResume(e.target.value); setErrResume(null); }} error={errResume} />
+                                                                 <Gap height={20} />
+                                                                 <Input type="text" id="portfolioLink" name="portfolioLink" label="Portfolio Link" placeholder="Upload your portfolio link here"
+                                                                      value={portfolioLink} onChange={(e) => { setPortfolioLink(e.target.value); setErrPortfolioLink(null); }} error={errPortfolioLink} />
+                                                                 <Gap height={20} />
+                                                                 <Select id="bankAccount" name="bankAccount" label="Bank Account" options={["BCA", "BNI", "BRI", "Mandiri", "CIMB Niaga"]}
+                                                                      value={bankAccount} onChange={(e) => { setBankAccount(e.target.value); setErrBankAccount(null); }} error={errBankAccount} />
+                                                                 <Gap height={20} />
+                                                                 <Input type="text" id="accountName" name="accountName" label="Account Name"
+                                                                      value={accountName} onChange={(e) => { setAccountName(e.target.value); setErrAccountName(null); }} error={errAccountName} />
+                                                                 <Gap height={20} />
+                                                                 <Input type="text" id="accountNumber" name="accountNumber" label="Account Number" placeholder="527xxxxxxx"
+                                                                      value={accountNumber} onChange={(e) => { setAccountNumber(e.target.value); setErrAccountNumber(null); }} error={errAccountNumber} />
+                                                            </div>
+                                                       </div>
+                                                       <Gap height={40} />
+                                                       <Button isFull type={2} onClick={handleSubmitDesignerData}>
+                                                            <h5 className="text-white subHeading3">LET'S BECOME OUR DESIGNERS</h5>
+                                                       </Button>
+                                                       <Gap height={20} />
+                                                       <p className="text-center paragraph">I just want to be a customer <u className="textBlue1 fw-bold" onClick={() => setRegisterSection(2)}>Choose My Role</u></p>
+                                                  </Fragment>
+                                                  :
+                                                  <p>Please wait...</p>
+                                        }
                                    </Fragment>
                                    :
                                    <Fragment>
