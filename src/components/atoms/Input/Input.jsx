@@ -6,7 +6,7 @@ const Input = ({ label, id, type, error, ...rest }) => {
                {
                     label &&
                     <label htmlFor={id} className="col-lg-4">
-                         <h1 class="paragraph fw-bold">{label}</h1>
+                         <h1 className="paragraph fw-bold">{label}</h1>
                     </label>
                }
                <div className={label ? "col-lg-8" : "col-lg-12"}>

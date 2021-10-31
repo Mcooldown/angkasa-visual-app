@@ -113,9 +113,6 @@ const ServiceDetail = () => {
 
           const apiFetch = await fetch(urlAPI + `savecart?packageId=${productPackageId}&designer_id=${designerId}&request_file_link=${requestFileLink}&quantity=${quantity}&notes=${notes}&deadline=${deadline}`, {
                method: 'POST',
-               headers: {
-                    Authorization: 'Bearer ' + token,
-               }
           }).catch(err => {
                console.log(err);
           });
@@ -144,12 +141,12 @@ const ServiceDetail = () => {
                                    products ?
                                         <Fragment>
                                              <div className="col-lg-5">
-                                                  <img src={Sample} alt="serviceDetail" className="w-100" />
+                                                  <img src={products[0].image ? products[0].image : Sample} alt="serviceDetail" className="w-100" />
                                              </div>
                                              <div className="col-lg-7 ps-lg-5 text-white">
                                                   <h1 className="title">{products[0].product_name}</h1>
                                                   <Gap height={15} />
-                                                  <p className="paragraph m-0">{products[0].product_category}</p>
+                                                  <p className="paragraph m-0">{products[0].product_desc}</p>
                                              </div>
                                         </Fragment>
                                         : <div className="col-12 text-center">
@@ -243,7 +240,7 @@ const ServiceDetail = () => {
                                                                       {
                                                                            designers && designers.map(designer => {
                                                                                 return (
-                                                                                     <option value={designer.id}>{designer.name}</option>
+                                                                                     <option value={designer.designer_id}>{designer.name}</option>
                                                                                 )
                                                                            })
                                                                       }

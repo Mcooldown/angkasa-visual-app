@@ -27,7 +27,6 @@ const Login = ({ changeSection, setIsAuth, isAuth, setAuthUser }) => {
           const res = await apiFetch.json();
 
           if (res.success) {
-               console.log(res);
                localStorage.setItem('token', res.token);
                return true;
           } else {

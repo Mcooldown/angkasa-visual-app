@@ -1,9 +1,8 @@
-import { Fragment, useEffect } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { useHistory } from "react-router"
-import { useState } from "react/cjs/react.development"
 import Swal from "sweetalert2"
 import { Gap, Input, Select, Button } from "../../components/atoms"
-import OrderItem from "../../components/molecules/OrderItem/OrderItem"
+import { OrderItem } from "../../components/molecules"
 import "./Checkout.scss"
 
 const Checkout = () => {

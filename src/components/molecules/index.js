@@ -5,5 +5,7 @@ import ServiceCard from "./ServiceCard/ServiceCard";
 import TestimonyCard from "./TestimonyCard/TestimonyCard";
 import Login from "./Login/Login";
 import Register from "./Register/Register";
+import OrderItem from "./OrderItem/OrderItem";
+import TransactionItem from "./TransactionItem/TransactionItem";
 
-export {Navbar, Footer, WorkCard, ServiceCard, TestimonyCard, Login, Register};
+export {Navbar, Footer, WorkCard, ServiceCard, TestimonyCard, Login, Register, TransactionItem, OrderItem};

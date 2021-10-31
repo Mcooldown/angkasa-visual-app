@@ -1,11 +1,10 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Login, Register } from '..';
 import { Logo } from '../../../assets';
 import { Gap, Button, } from '../../atoms';
 import './navbar.scss';
 import Swal from "sweetalert2";
-import { useEffect } from 'react/cjs/react.development';
 import { useHistory } from 'react-router';
 
 const Navbar = () => {
@@ -40,13 +39,13 @@ const Navbar = () => {
 
      const fetchAuthUser = async () => {
           const apiFetch = await fetch(urlAPI + `getuser?token=${localStorage.getItem('token')}`, {
-               method: 'GET',
+               method: 'POST',
           }).catch(err => {
                console.log(err);
           });
           const res = await apiFetch.json();
           if (res.user) {
-               setAuthUser(res.user);
+               setAuthUser(res.user[0]);
                setIsAuth(true);
           } else {
                setIsAuth(false);
@@ -82,14 +81,14 @@ const Navbar = () => {
                                    <Gap width={30} height={10} />
                                    {
                                         isAuth ?
-                                             <li class="nav-item dropdown">
+                                             <li className="nav-item dropdown">
                                                   {
                                                        authUser &&
                                                        <Fragment>
                                                             <a className="textBlue1 text-decoration-none dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                                  {authUser.name}
                                                             </a>
-                                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                                                                  <Link to="/cart" className="text-decoration-none text-reset"><li className="dropdown-item">Cart</li></Link>
                                                                  <Link to="/orders" className="text-decoration-none text-reset"><li className="dropdown-item">Orders</li></Link>
                                                                  <li onClick={logout} className="dropdown-item" style={{ cursor: "pointer" }}>Logout</li>
@@ -112,7 +111,7 @@ const Navbar = () => {
                          </div>
                     </div>
                </nav>
-               <div className="modal fade" id="authModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+               <div className="modal fade" id="authModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
                     <div className="modal-dialog modal-xl modal-dialog-centered">
                          <div className="modal-content cModalAuth">
                               <div className="modal-body">

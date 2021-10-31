@@ -2,19 +2,39 @@ import { Fragment, useEffect } from "react"
 import { useHistory } from "react-router";
 import Swal from "sweetalert2";
 import { Gap, Button } from "../../components/atoms"
-import OrderItem from "../../components/molecules/OrderItem/OrderItem";
+import { OrderItem } from "../../components/molecules";
 import "./Cart.scss";
 
 const Cart = () => {
 
+     const urlAPI = process.env.REACT_APP_API_URL;
      const history = useHistory();
 
+     const fetchCart = async (token) => {
+          const apiFetch = await fetch(urlAPI + `carts?token=${token}`, {
+               method: 'POST',
+          }).catch(err => {
+               console.log(err);
+          });
+          const res = await apiFetch.json();
+          console.log(res);
+          // if (res.success) {
+          //      return true;
+          // } else {
+          //      console.log(apiFetch.error);
+          //      return false;
+          // }
+     }
+
      useEffect(() => {
+
           if (!localStorage.getItem('token')) {
                Swal.fire({ icon: 'error', title: 'error', text: 'Please login first', confirmButtonColor: "#0F70B7" })
                     .then(() => {
                          history.push('/');
                     });
+          } else {
+               fetchCart(localStorage.getItem('token'));
           }
 
      }, [history]);

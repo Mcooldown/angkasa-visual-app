@@ -8,18 +8,18 @@ const RadioButton = ({ id, options, label, error, value, ...rest }) => {
                     {
                          label &&
                          <label htmlFor={id} className="col-lg-4">
-                              <h1 class="paragraph fw-bold">{label}</h1>
+                              <h1 className="paragraph fw-bold">{label}</h1>
                          </label>
                     }
                     <div className={(label ? "col-lg-8" : "col-lg-12") + " d-flex"}>
                          {
                               options && options.map(optionItem => {
                                    return (
-                                        <Fragment>
+                                        <Fragment key={optionItem}>
                                              <div className="form-check">
                                                   <input className="form-check-input" type="radio" id={id}
                                                        value={optionItem} checked={optionItem === value} {...rest} />
-                                                  <label className="form-check-label" for={id}>
+                                                  <label className="form-check-label" htmlFor={id}>
                                                        {optionItem}
                                                   </label>
                                              </div>
