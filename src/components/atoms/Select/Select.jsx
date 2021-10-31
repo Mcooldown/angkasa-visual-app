@@ -9,6 +9,7 @@ const Select = ({ label, id, options, error, ...rest }) => {
                }
                <div className={label ? "col-lg-8" : "col-lg-12"}>
                     <select className={"form-select cFormInput" + (error ? ' is-invalid' : '')} id={id} {...rest} >
+                         <option value="">Choose...</option>
                          {
                               options.map(optionItem => {
                                    return (

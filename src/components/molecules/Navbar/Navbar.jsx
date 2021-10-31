@@ -4,11 +4,42 @@ import { Login, Register } from '..';
 import { Logo } from '../../../assets';
 import { Gap, Button, } from '../../atoms';
 import './navbar.scss';
-
+import Swal from "sweetalert2";
+import { useEffect } from 'react/cjs/react.development';
 
 const Navbar = () => {
 
      const [isLogin, setIsLogin] = useState(false);
+     const [isAuth, setIsAuth] = useState(false);
+     const [isLoading, setIsLoading] = useState(false);
+
+     const urlAPI = process.env.REACT_APP_API_URL;
+
+     const logout = async () => {
+
+          const token = localStorage.getItem('token');
+
+          if (token) {
+               setIsLoading(true);
+               await fetch(urlAPI + `logout?token=${token}`, {
+                    method: 'GET'
+               }).then(res => {
+                    localStorage.clear();
+                    setIsAuth(false);
+                    Swal.fire({ 'icon': 'success', 'title': 'Logout Success', 'showConfirmButton': true, 'confirmButtonColor': "#0F70B7" });
+                    setIsLoading(false);
+               }).catch(err => {
+                    console.log(err);
+               });
+
+          }
+     }
+
+     useEffect(() => {
+          if (localStorage.getItem('token')) {
+               setIsAuth(true);
+          }
+     }, []);
 
      return (
           <Fragment>
@@ -27,8 +58,8 @@ const Navbar = () => {
                                    <Link to="/our-services" className="textBlue1 text-decoration-none">Our Services</Link>
                                    <Gap width={30} height={10} />
                                    {
-                                        localStorage.getItem('token') ?
-                                             <Button type={1} data-bs-toggle="modal" data-bs-target="#authModal">
+                                        isAuth ?
+                                             <Button type={1} onClick={logout} isLoading={isLoading}>
                                                   <h6 className="fw-bold m-0 p-1">Logout</h6>
                                              </Button>
                                              :
@@ -53,7 +84,7 @@ const Navbar = () => {
                                    <Gap height={40} />
                                    {
                                         isLogin ?
-                                             <Login changeSection={() => setIsLogin(false)} />
+                                             <Login changeSection={() => setIsLogin(false)} setIsAuth={(value) => setIsAuth(value)} isAuth={isAuth} />
                                              :
                                              <Register changeSection={() => setIsLogin(true)} />
                                    }

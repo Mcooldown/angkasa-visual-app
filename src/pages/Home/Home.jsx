@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import "./Home.scss";
 import { Button, Gap } from "../../components/atoms";
 import { LandingIllust, Send, Why1, Why2, Why3 } from "../../assets";
@@ -6,8 +6,6 @@ import WorkCard from "../../components/molecules/WorkCard/WorkCard";
 import OwlCarousel from 'react-owl-carousel2';
 
 const Home = () => {
-
-     const urlAPI = process.env.REACT_APP_API_URL;
 
      const optionsRecentWorks = {
           items: 2,
@@ -25,24 +23,6 @@ const Home = () => {
                }
           }
      };
-
-     const initialize = async () => {
-          const fetchData = await fetch(urlAPI + 'products', {
-               method: 'GET',
-               headers: {
-                    'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest'
-               },
-          });
-          const datajson = await fetchData.json();
-          console.log(datajson);
-     }
-
-     useEffect(() => {
-          initialize().then(() => {
-
-          });
-     }, []);
-
 
      return (
           <Fragment>

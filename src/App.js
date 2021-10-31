@@ -33,7 +33,7 @@ function App() {
               <Route path="/checkout" exact>
                     <Checkout />
               </Route>
-              <Route path="/service-detail" exact>
+              <Route path="/services/:id" exact>
                     <ServiceDetail />
               </Route>
           </Switch>

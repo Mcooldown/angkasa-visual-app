@@ -1,4 +1,5 @@
 import { Fragment, useState } from "react";
+import { useHistory } from "react-router";
 import { CustomerSymbol, DesignerSymbol, RegisterSuccess } from "../../../assets";
 import { Gap, Input, Select, Button } from "../../atoms";
 import RadioButton from "../../atoms/RadioButton/RadioButton";
@@ -6,9 +7,10 @@ import "./Register.scss";
 
 const Register = ({ changeSection }) => {
 
-     const [isLoading, setIsLoading] = useState(false);
-     const [registerSection, setRegisterSection] = useState(1);
      const urlAPI = process.env.REACT_APP_API_URL;
+     const history = useHistory();
+     const [registerSection, setRegisterSection] = useState(1);
+     const [isLoading, setIsLoading] = useState(false);
 
      // Register Form
      const [name, setName] = useState('');
@@ -29,16 +31,20 @@ const Register = ({ changeSection }) => {
      const [isCustomer, setIsCustomer] = useState(false);
 
      // Designer form apply
+     const [idCard, setIdCard] = useState('');
+     const [errIdCard, setErrIdCard] = useState(null);
+     const [skills, setSkills] = useState('');
+     const [errSkills, setErrSkills] = useState(null);
      const [resume, setResume] = useState('');
-     const [errResume, setErrResume] = useState(false);
+     const [errResume, setErrResume] = useState(null);
      const [portfolioLink, setPortfolioLink] = useState('');
-     const [errPortfolioLink, setErrPortfolioLink] = useState(false);
+     const [errPortfolioLink, setErrPortfolioLink] = useState(null);
      const [bankAccount, setBankAccount] = useState('');
-     const [errBankAccount, setErrBankAccount] = useState(false);
+     const [errBankAccount, setErrBankAccount] = useState(null);
      const [accountName, setAccountName] = useState('');
-     const [errAccountName, setErrAccountName] = useState(false);
+     const [errAccountName, setErrAccountName] = useState(null);
      const [accountNumber, setAccountNumber] = useState('');
-     const [errAccountNumber, setErrAccountNumber] = useState(false);
+     const [errAccountNumber, setErrAccountNumber] = useState(null);
 
      const clearForm = () => {
           setName(''); setErrName(null);
@@ -54,11 +60,14 @@ const Register = ({ changeSection }) => {
           setBankAccount(''); setErrBankAccount(null);
           setAccountName(''); setErrAccountName(null);
           setAccountNumber(''); setErrAccountNumber(null);
+          setIdCard(''); setErrIdCard(null);
+          setSkills(''); setErrSkills(null);
      }
 
      const handleCloseModal = () => {
           setRegisterSection(1);
           clearForm();
+          setIsLoading(false);
      }
 
      const handleSubmitPersonalData = () => {
@@ -103,6 +112,7 @@ const Register = ({ changeSection }) => {
                addUserToAPI().then((res) => {
                     if (res) {
                          setRegisterSection(4);
+                         history.push('/');
                     } else {
                          setIsLoading(false);
                     }
@@ -114,6 +124,14 @@ const Register = ({ changeSection }) => {
 
           let pass = true;
 
+          if (!skills) {
+               setErrSkills("Skill must be filled");
+               pass = false;
+          }
+          if (!idCard) {
+               setErrIdCard("ID Card link must be filled");
+               pass = false;
+          }
           if (!resume) {
                setErrResume("Resume link must be filled");
                pass = false;
@@ -136,45 +154,51 @@ const Register = ({ changeSection }) => {
           }
 
           if (pass) {
-               addUserToAPI().then(userId => {
-                    addDesignerToAPI(userId).then(() => {
+               addDesignerToAPI().then((res) => {
+                    if (res) {
                          setRegisterSection(5);
-                    });
-               })
+                         history.push('/');
+                    } else {
+                         setIsLoading(false);
+                    }
+               });
           }
      }
 
      const addUserToAPI = async () => {
           setIsLoading(true);
 
-          fetch(urlAPI + 'register', {
+          const apiFetch = await fetch(urlAPI + `register?name=${name}&email=${email}&phone_number=${phoneNumber}&dob=${dateOfBirth}&address=${address}&password=${password}&id_card=&is_designer=${isDesigner}&is_customer=${isCustomer}`, {
                method: 'POST',
-               headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-               },
-               body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    phone_number: phoneNumber,
-                    dob: dateOfBirth,
-                    address: address,
-                    password: password,
-                    id_card: "",
-                    is_designer: isDesigner,
-                    is_customer: isCustomer,
-               })
-          }).then(res => {
-               console.log(res);
-               return true;
           }).catch(err => {
                console.log(err);
-               return false;
           });
+          const res = await apiFetch.json();
+
+          if (res.error) {
+               console.log(apiFetch.error);
+               return false;
+          } else {
+               return true;
+          }
      }
 
-     const addDesignerToAPI = async (userId) => {
+     const addDesignerToAPI = async () => {
+          setIsLoading(true);
 
+          const apiFetch = await fetch(urlAPI + `registerdesigner?name=${name}&email=${email}&phone_number=${phoneNumber}&dob=${dateOfBirth}&address=${address}&password=${password}&id_card=${idCard}&is_designer=${isDesigner}&is_customer=${isCustomer}&bank_account=${bankAccount}&account_name=${accountName}&account_number=${accountNumber}&resume=${resume}&portofolio_link=${portfolioLink}&skills=${skills}`, {
+               method: 'POST',
+          }).catch(err => {
+               console.log(err);
+          });
+          const res = await apiFetch.json();
+
+          if (res.error) {
+               console.log(apiFetch.error);
+               return false;
+          } else {
+               return true;
+          }
      }
 
      return (
@@ -287,6 +311,12 @@ const Register = ({ changeSection }) => {
                                                        <Gap height={80} />
                                                        <div className="card cCardAuth">
                                                             <div className="card-body">
+                                                                 <Input type="text" id="skills" name="skills" label="Skills" placeholder="Fill your skills here"
+                                                                      value={skills} onChange={(e) => { setSkills(e.target.value); setErrSkills(null); }} error={errSkills} />
+                                                                 <Gap height={20} />
+                                                                 <Input type="text" id="idCard" name="idCard" label="ID Card Link" placeholder="Upload your ID Card/KTP link here"
+                                                                      value={idCard} onChange={(e) => { setIdCard(e.target.value); setErrIdCard(null); }} error={errIdCard} />
+                                                                 <Gap height={20} />
                                                                  <Input type="text" id="resume" name="resume" label="Resume Link" placeholder="Upload your resume link here"
                                                                       value={resume} onChange={(e) => { setResume(e.target.value); setErrResume(null); }} error={errResume} />
                                                                  <Gap height={20} />

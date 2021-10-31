@@ -1,26 +1,23 @@
-import { Fragment } from "react"
+import { Fragment, useEffect } from "react"
 import { useHistory } from "react-router";
-import { Sample } from "../../assets";
-import { Gap, Input, Select, Button } from "../../components/atoms"
+import Swal from "sweetalert2";
+import { Gap, Button } from "../../components/atoms"
+import OrderItem from "../../components/molecules/OrderItem/OrderItem";
 import "./Cart.scss";
 
 const Cart = () => {
 
      const history = useHistory();
-     // const [cartItems, setCartItems] = useState(null);
 
-     // Edit 1 item cart
-     // const [editedId, setEditedId] = useState(null);
-     // const [editedName, setEditedName] = useState(null);
-     // const [editedPrice, setEditedPrice] = useState(null);
-     // const [editedPackage, setEditedPackage] = useState(null);
-     // const [editedType, setEditedType] = useState(null);
-     // const [editedQuantity, setEditedQuantity] = useState(null);
-     // const [editedDetailRequestLink, setEditedDetailRequestLink] = useState(null);
-     // const [editedPreferredDesigner, setEditedPreferredDesigner] = useState(null);
-     // const [editedNotes, setEditedNotes] = useState(null);
-     // const [editedEstimatedTime, setEditedEstimatedTime] = useState(null);
+     useEffect(() => {
+          if (!localStorage.getItem('token')) {
+               Swal.fire({ icon: 'error', title: 'error', text: 'Please login first', confirmButtonColor: "#0F70B7" })
+                    .then(() => {
+                         history.push('/');
+                    });
+          }
 
+     }, [history]);
 
      return (
           <Fragment>
@@ -28,52 +25,14 @@ const Cart = () => {
                     <div className="container-fluid">
                          <h1 className="title textBlue1 text-center">My Cart</h1>
                          <Gap height={60} />
-                         <div className="cCartCard">
-                              <div className="card-body p-lg-5">
-                                   <div className="row justify-content-between align-items-center">
-                                        <div className="col-lg-8">
-                                             <div className="row align-items-center">
-                                                  <div className="col-lg-4 my-3">
-                                                       <img src={Sample} className="w-100" alt="" />
-                                                  </div>
-                                                  <div className="col-lg-7 my-3 ps-lg-5">
-                                                       <h1 className="subHeading2 textBlue1">Logo Design</h1>
-                                                       <Gap height={5} />
-                                                       <p className="paragraph">Rp 50.000 - Rp 100.000</p>
-                                                       <Gap height={15} />
-                                                       <Select label="Type" id="type" options={['Typhography']} name="type" />
-                                                       <Gap height={10} />
-                                                       <Input type="number" label="Quantity" id="quantity" name="quantity" min={1} />
-                                                  </div>
-                                             </div>
-                                        </div>
-                                        <div className="col-lg-3 my-3 text-end">
-                                             <Select id="package" options={['Sky Package', 'Space Package', 'Universe Package']} name="package" />
-                                             <Gap height={15} />
-                                             <p className="fst-italic">Estimated processing time: <b>3 days</b></p>
-                                             <Gap height={10} />
-                                             <h1 className="subHeading2 text-danger">Rp 50.000 - Rp 100.000</h1>
-                                             <Gap height={20} />
-                                             <Button type={1}>
-                                                  <h5 className="m-1">Remove</h5>
-                                             </Button>
-                                        </div>
-                                   </div>
-                                   <hr />
-                                   <Gap height={20} />
-                                   <Input label="Detail Request Link" placeholder="Put your request file (word/pdf) at google drive and copy the link here"
-                                        name="requestFileLink" id="requestFileLink" type="text" />
-                                   <Gap height={20} />
-                                   <Select label="Preferred Designer" id="preferredDesigner" name="preferredDesigner" options={["Andi", "Budi"]} />
-                                   <Gap height={20} />
-                                   <Input label="Notes" id="notes" name="notes" type="text" />
-                              </div>
-                         </div>
-                         <Gap height={50} />
+                         <OrderItem key={1} id={1} image={""} notes="Bagus" onDelete={() => { }} packageName={"Sky Package"}
+                              preferredDesigner={"Budi"} price={20000} productName={"Logo Design"} quantity={1}
+                              requestFileLink={"www.google.com"} />
+                         <Gap height={100} />
                          <div className="d-flex justify-content-end align-items-center">
                               <p className="m-0 paragraph">Subtotal: </p>
                               <Gap width={15} />
-                              <h1 className="subHeading2 text-danger">Rp 50.000 - Rp 100.000</h1>
+                              <h1 className="heading2 text-danger">Rp 100.000</h1>
                          </div>
                          <Gap height={50} />
                          <Button isFull type={2} onClick={() => history.push('/checkout')}>
