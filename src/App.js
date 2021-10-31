@@ -10,6 +10,7 @@ import '@fortawesome/fontawesome-free/scss/regular.scss';
 import 'react-owl-carousel2/src/owl.carousel.css';
 import { AboutUs, Cart, Checkout, Home, OurServices, ServiceDetail} from './pages';
 import { Footer, Navbar } from './components/molecules';
+import OrderList from './pages/OrderList/OrderList';
 
 function App() {
   return (
@@ -35,6 +36,9 @@ function App() {
               </Route>
               <Route path="/services/:id" exact>
                     <ServiceDetail />
+              </Route>
+              <Route path="/orders" exact>
+                    <OrderList />
               </Route>
           </Switch>
         </div>

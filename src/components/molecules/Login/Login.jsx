@@ -6,7 +6,7 @@ import { RegisterSuccess } from '../../../assets';
 import Swal from 'sweetalert2';
 import { useHistory } from 'react-router';
 
-const Login = ({ changeSection, setIsAuth, isAuth }) => {
+const Login = ({ changeSection, setIsAuth, isAuth, setAuthUser }) => {
 
      const urlAPI = process.env.REACT_APP_API_URL;
      const history = useHistory();
@@ -38,7 +38,6 @@ const Login = ({ changeSection, setIsAuth, isAuth }) => {
 
      // Submit Login
      const handleLogin = () => {
-          setIsLoading(true);
           let pass = true;
 
           if (!emailLogin) {
@@ -49,16 +48,19 @@ const Login = ({ changeSection, setIsAuth, isAuth }) => {
                setErrPasswordLogin('Password must be filled');
                pass = false;
           }
-
           if (pass) {
+               setIsLoading(true);
                loginToAPI().then((res) => {
                     if (res) {
                          setIsAuth(true);
+                         setAuthUser();
                          history.push('/');
                     }
+                    setIsLoading(false);
                })
+          } else {
+               setIsLoading(false);
           }
-          setIsLoading(false);
      }
 
      const clearForm = () => {
