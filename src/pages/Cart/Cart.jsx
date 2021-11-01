@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { useHistory } from "react-router";
 import Swal from "sweetalert2";
 import { Gap, Button } from "../../components/atoms"
@@ -9,6 +9,8 @@ const Cart = () => {
 
      const urlAPI = process.env.REACT_APP_API_URL;
      const history = useHistory();
+     const [cartItems, setCartItems] = useState();
+     const [subTotal, setSubTotal] = useState();
 
      const fetchCart = async (token) => {
           const apiFetch = await fetch(urlAPI + `carts?token=${token}`, {
@@ -17,13 +19,14 @@ const Cart = () => {
                console.log(err);
           });
           const res = await apiFetch.json();
-          console.log(res);
-          // if (res.success) {
-          //      return true;
-          // } else {
-          //      console.log(apiFetch.error);
-          //      return false;
-          // }
+          if (res.success) {
+               setSubTotal(res.amount);
+               setCartItems(res.data);
+               return true;
+          } else {
+               console.log(apiFetch.error);
+               return false;
+          }
      }
 
      useEffect(() => {
@@ -39,21 +42,47 @@ const Cart = () => {
 
      }, [history]);
 
+
+     const deleteCartItem = async (id) => {
+          const apiFetch = await fetch(urlAPI + `deletecart?id=${id}&token=${localStorage.getItem('token')}`, {
+               method: 'POST',
+          }).catch(err => {
+               console.log(err);
+          });
+          const res = await apiFetch.json();
+          if (res.success) {
+               Swal.fire({ 'icon': 'success', 'title': 'Success', 'text': 'Cart Item deleted', 'confirmButtonColor': '#0F70B7' })
+               fetchCart(localStorage.getItem('token'));
+          } else {
+               console.log(apiFetch.error);
+               Swal.fire({ 'icon': 'error', 'title': 'Error', 'text': 'Error delete cart item', 'confirmButtonColor': '#0F70B7' })
+          }
+     }
+
      return (
           <Fragment>
                <div className="cCart">
                     <div className="container-fluid">
                          <h1 className="title textBlue1 text-center">My Cart</h1>
                          <Gap height={60} />
-                         <OrderItem key={1} id={1} image={""} notes="Bagus" onDelete={() => { }} packageName={"Sky Package"}
-                              preferredDesigner={"Budi"} price={20000} productName={"Logo Design"} quantity={1}
-                              requestFileLink={"www.google.com"} />
+                         {
+                              cartItems && cartItems.map((cartItem) => {
+                                   return (
+                                        <OrderItem key={cartItem.id} id={cartItem.id} image={cartItem.product_image} notes={cartItem.notes} onDelete={deleteCartItem} packageName={cartItem.package_name}
+                                             preferredDesigner={cartItem.designer_name} price={cartItem.price} productName={cartItem.product_name} quantity={cartItem.quantity}
+                                             requestFileLink={cartItem.request_file_link} />
+                                   )
+                              })
+                         }
                          <Gap height={100} />
-                         <div className="d-flex justify-content-end align-items-center">
-                              <p className="m-0 paragraph">Subtotal: </p>
-                              <Gap width={15} />
-                              <h1 className="heading2 text-danger">Rp 100.000</h1>
-                         </div>
+                         {
+                              subTotal &&
+                              <div className="d-flex justify-content-end align-items-center">
+                                   <p className="m-0 paragraph">Subtotal: </p>
+                                   <Gap width={15} />
+                                   <h1 className="heading2 text-danger">Rp {subTotal}</h1>
+                              </div>
+                         }
                          <Gap height={50} />
                          <Button isFull type={2} onClick={() => history.push('/checkout')}>
                               <h5 className="subHeading3 texBlue1">CHECKOUT</h5>

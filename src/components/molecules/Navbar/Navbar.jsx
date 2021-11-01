@@ -45,7 +45,7 @@ const Navbar = () => {
           });
           const res = await apiFetch.json();
           if (res.user) {
-               setAuthUser(res.user[0]);
+               setAuthUser(res.user);
                setIsAuth(true);
           } else {
                setIsAuth(false);

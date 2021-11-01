@@ -11,7 +11,6 @@ const ServiceDetail = () => {
      const history = useHistory();
      const { id } = useParams();
      const [isLoading, setIsLoading] = useState(false);
-     const [token, setToken] = useState(null);
 
      const [products, setProducts] = useState(null);
      const [designers, setDesigners] = useState(null);
@@ -111,7 +110,7 @@ const ServiceDetail = () => {
      const addToCartAPI = async () => {
           setIsLoading(true);
 
-          const apiFetch = await fetch(urlAPI + `savecart?packageId=${productPackageId}&designer_id=${designerId}&request_file_link=${requestFileLink}&quantity=${quantity}&notes=${notes}&deadline=${deadline}`, {
+          const apiFetch = await fetch(urlAPI + `savecart?package_id=${productPackageId}&designer_id=${designerId}&request_file_link=${requestFileLink}&quantity=${quantity}&notes=${notes}&deadline=${deadline}&token=${localStorage.getItem('token')}`, {
                method: 'POST',
           }).catch(err => {
                console.log(err);
@@ -125,12 +124,6 @@ const ServiceDetail = () => {
                return true;
           }
      }
-
-     useEffect(() => {
-          if (localStorage.getItem('token')) {
-               setToken(localStorage.getItem('token'));
-          }
-     }, [token]);
 
      return (
           <Fragment>
@@ -188,7 +181,7 @@ const ServiceDetail = () => {
                <div className="cOrderToCart">
                     <div className="container-fluid">
                          {
-                              token && products ?
+                              localStorage.getItem('token') && products ?
                                    <div className="row align-items-center justify-content-between">
                                         <div className="col-lg-5 text-end my-3">
                                              <h1 className="heading1 textBlue1">Drop Your Order Here!</h1>
