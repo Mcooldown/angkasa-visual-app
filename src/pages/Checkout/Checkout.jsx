@@ -7,6 +7,7 @@ import "./Checkout.scss"
 
 const Checkout = () => {
 
+     const urlAPI = process.env.REACT_APP_API_URL;
      const history = useHistory();
      const [bankAccount, setBankAccount] = useState('');
      const [errBankAccount, setErrBankAccount] = useState(null);
@@ -16,18 +17,49 @@ const Checkout = () => {
      const [errAccountNumber, setErrAccountNumber] = useState(null);
      const [paymentProof, setPaymentProof] = useState(null);
      const [errPaymentProof, setErrPaymentProof] = useState(null);
+     const [isLoading, setIsLoading] = useState(null);
+
+     const [cartItems, setCartItems] = useState();
+     const [subTotal, setSubTotal] = useState();
+
+     const fetchCart = async (token) => {
+          const apiFetch = await fetch(urlAPI + `carts?token=${token}`, {
+               method: 'POST',
+          }).catch(err => {
+               console.log(err);
+          });
+          const res = await apiFetch.json();
+          if (res.success) {
+               setSubTotal(res.amount);
+               setCartItems(res.data);
+               return true;
+          } else {
+               console.log(apiFetch.error);
+               return false;
+          }
+     }
 
      useEffect(() => {
+
           if (!localStorage.getItem('token')) {
                Swal.fire({ icon: 'error', title: 'error', text: 'Please login first', confirmButtonColor: "#0F70B7" })
                     .then(() => {
                          history.push('/');
                     });
+          } else {
+               fetchCart(localStorage.getItem('token'));
           }
+
      }, [history]);
 
      const checkoutToAPI = async () => {
-          return true;
+          const apiFetch = await fetch(urlAPI + `saveorder?tanggal_order=${new Date().toLocaleString('en-GB', { "day": "numeric", "month": "numeric", "year": "numeric" })}&bank_name=${bankAccount}&account_name=${accountName}&account_number=${accountNumber}&payment_proof=${paymentProof}&payment_status=0&token=${localStorage.getItem('token')}`, {
+               method: 'POST',
+          }).catch(err => {
+               console.log(err);
+          });
+          const res = await apiFetch.json();
+          return res;
      }
 
      const handlePay = () => {
@@ -51,8 +83,17 @@ const Checkout = () => {
           }
 
           if (pass) {
+               setIsLoading(true);
                checkoutToAPI().then((res) => {
-                    alert('success');
+                    if (res.success) {
+                         Swal.fire({ icon: "success", title: "Checkout Success", confirmButtonColor: "#0F70B7" })
+                              .then(() => {
+                                   history.push('/orders/' + res.orderId);
+                              })
+                    } else {
+                         Swal.fire({ icon: "error", title: "Checkout Error", confirmButtonColor: "#0F70B7" });
+                    }
+                    setIsLoading(false);
                })
           }
      }
@@ -69,12 +110,15 @@ const Checkout = () => {
                     <div className="container-fluid">
                          <h1 className="subHeading1 text-white">Step 1: Check your order</h1>
                          <Gap height={30} />
-                         <OrderItem key={1} id={1} image={""} notes="Bagus" packageName={"Sky Package"}
-                              preferredDesigner={"Budi"} price={20000} productName={"Logo Design"} quantity={1}
-                              requestFileLink={"www.google.com"} />
-                         <OrderItem key={1} id={1} image={""} notes="Bagus" packageName={"Sky Package"}
-                              preferredDesigner={"Budi"} price={20000} productName={"Logo Design"} quantity={1}
-                              requestFileLink={"www.google.com"} />
+                         {
+                              cartItems ? cartItems.map((cartItem) => {
+                                   return (
+                                        <OrderItem key={cartItem.id} id={cartItem.id} image={cartItem.product_image} notes={cartItem.notes} packageName={cartItem.package_name}
+                                             preferredDesigner={cartItem.designer_name} price={cartItem.price} productName={cartItem.product_name} quantity={cartItem.quantity}
+                                             requestFileLink={cartItem.request_file_link} />
+                                   )
+                              }) : <p className="text-white">Please wait...</p>
+                         }
                     </div>
                </div>
                <Gap height={50} />
@@ -84,11 +128,14 @@ const Checkout = () => {
                          <h1 className="subHeading1 text-white">Step 2: Choose payment method</h1>
                          <Gap height={50} />
                          <div className="cCheckoutFormCard">
-                              <div className="d-flex justify-content-center align-items-center">
-                                   <p className="m-0 paragraph">Total Price: </p>
-                                   <Gap width={15} />
-                                   <h1 className="subHeading2 text-danger">Rp 100.000</h1>
-                              </div>
+                              {
+                                   subTotal &&
+                                   <div className="d-flex justify-content-center align-items-center">
+                                        <p className="m-0 paragraph">Total Price: </p>
+                                        <Gap width={15} />
+                                        <h1 className="subHeading2 text-danger">Rp {subTotal}</h1>
+                                   </div>
+                              }
                               <Gap height={40} />
                               <Select id="bankAccount" name="bankAccount" label="Bank Account" options={["BCA", "BNI", "BRI", "Mandiri", "CIMB Niaga"]}
                                    value={bankAccount} onChange={(e) => { setBankAccount(e.target.value); setErrBankAccount(null); }} error={errBankAccount} />
@@ -103,7 +150,7 @@ const Checkout = () => {
                                    value={paymentProof} onChange={(e) => { setPaymentProof(e.target.value); setErrPaymentProof(null); }} error={errPaymentProof} />
                          </div>
                          <Gap height={30} />
-                         <Button isFull type={2} onClick={handlePay}>
+                         <Button isFull type={2} onClick={handlePay} isLoading={isLoading}>
                               <h5 className="subHeading3 texBlue1">PAY</h5>
                          </Button>
                     </div>

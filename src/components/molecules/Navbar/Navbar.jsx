@@ -22,12 +22,12 @@ const Navbar = () => {
 
           if (token) {
                await fetch(urlAPI + `logout?token=${token}`, {
-                    method: 'GET'
+                    method: 'POST'
                }).then(() => {
+                    localStorage.clear();
+                    setIsAuth(false);
                     Swal.fire({ 'icon': 'success', 'title': 'Logout Success', 'showConfirmButton': true, 'confirmButtonColor': "#0F70B7" })
                          .then(() => {
-                              localStorage.clear();
-                              setIsAuth(false);
                               history.push('/');
                          });
                }).catch(err => {
@@ -85,7 +85,7 @@ const Navbar = () => {
                                                   {
                                                        authUser &&
                                                        <Fragment>
-                                                            <a className="textBlue1 text-decoration-none dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <a className="textBlue1 text-decoration-none dropdown-toggle pe-lg-5" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                                  {authUser.name}
                                                             </a>
                                                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">

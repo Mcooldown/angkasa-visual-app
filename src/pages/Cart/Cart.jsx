@@ -66,27 +66,30 @@ const Cart = () => {
                          <h1 className="title textBlue1 text-center">My Cart</h1>
                          <Gap height={60} />
                          {
-                              cartItems && cartItems.map((cartItem) => {
+                              (cartItems && cartItems.length > 0) ? cartItems.map((cartItem) => {
                                    return (
                                         <OrderItem key={cartItem.id} id={cartItem.id} image={cartItem.product_image} notes={cartItem.notes} onDelete={deleteCartItem} packageName={cartItem.package_name}
                                              preferredDesigner={cartItem.designer_name} price={cartItem.price} productName={cartItem.product_name} quantity={cartItem.quantity}
                                              requestFileLink={cartItem.request_file_link} />
                                    )
-                              })
+                              }) : <p className="paragraph text-muted text-center mt-4">No cart items</p>
                          }
                          <Gap height={100} />
                          {
-                              subTotal &&
-                              <div className="d-flex justify-content-end align-items-center">
-                                   <p className="m-0 paragraph">Subtotal: </p>
-                                   <Gap width={15} />
-                                   <h1 className="heading2 text-danger">Rp {subTotal}</h1>
-                              </div>
+                              subTotal ?
+                                   <div className="d-flex justify-content-end align-items-center">
+                                        <p className="m-0 paragraph">Subtotal: </p>
+                                        <Gap width={15} />
+                                        <h1 className="heading2 text-danger">Rp {subTotal}</h1>
+                                   </div> : null
                          }
                          <Gap height={50} />
-                         <Button isFull type={2} onClick={() => history.push('/checkout')}>
-                              <h5 className="subHeading3 texBlue1">CHECKOUT</h5>
-                         </Button>
+                         {
+                              (cartItems && cartItems.length > 0) &&
+                              <Button isFull type={2} onClick={() => history.push('/checkout')}>
+                                   <h5 className="subHeading3">CHECKOUT</h5>
+                              </Button>
+                         }
                     </div>
                </div>
           </Fragment >

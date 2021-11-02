@@ -8,7 +8,7 @@ import '@fortawesome/fontawesome-free/scss/brands.scss';
 import '@fortawesome/fontawesome-free/scss/solid.scss';
 import '@fortawesome/fontawesome-free/scss/regular.scss';
 import 'react-owl-carousel2/src/owl.carousel.css';
-import { AboutUs, Cart, Checkout, Home, OurServices, ServiceDetail} from './pages';
+import { AboutUs, Cart, Checkout, Home, OrderDetail, OurServices, ServiceDetail} from './pages';
 import { Footer, Navbar } from './components/molecules';
 import OrderList from './pages/OrderList/OrderList';
 
@@ -39,6 +39,9 @@ function App() {
               </Route>
               <Route path="/orders" exact>
                     <OrderList />
+              </Route>
+              <Route path="/orders/:id" exact>
+                    <OrderDetail />
               </Route>
           </Switch>
         </div>
