@@ -6,5 +6,6 @@ import Checkout from "./Checkout/Checkout";
 import ServiceDetail from "./ServiceDetail/ServiceDetail";
 import OrderList from "./OrderList/OrderList";
 import OrderDetail from "./OrderDetail/OrderDetail";
+import DesignerOrderList from "./DesignerOrderList/DesignerOrderList";
 
-export {Home, AboutUs, OurServices, Cart, Checkout, ServiceDetail, OrderList, OrderDetail};
+export {Home, AboutUs, OurServices, Cart, Checkout, ServiceDetail, OrderList, OrderDetail, DesignerOrderList};

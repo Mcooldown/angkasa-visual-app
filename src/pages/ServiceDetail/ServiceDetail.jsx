@@ -15,7 +15,7 @@ const ServiceDetail = () => {
      const [products, setProducts] = useState(null);
      const [designers, setDesigners] = useState(null);
 
-     const [designerId, setDesignerId] = useState(null);
+     const [designerId, setDesignerId] = useState("");
      const [errDesignerId, setErrDesignerId] = useState(null);
      const [productPackageId, setProductPackageId] = useState(null);
      const [errProductPackageId, setErrProductPackageId] = useState(null);
@@ -76,10 +76,6 @@ const ServiceDetail = () => {
           if (!productPackageId) {
                pass = false;
                setErrProductPackageId("Please select package");
-          }
-          if (!designerId) {
-               pass = false;
-               setErrDesignerId("Please select preferred designer");
           }
           if (!quantity) {
                pass = false;
@@ -230,8 +226,7 @@ const ServiceDetail = () => {
                                                             <div className="col-lg-8">
                                                                  <select className={"form-select cFormInput" + (errDesignerId ? ' is-invalid' : '')} id="designerId"
                                                                       onChange={(e) => { setDesignerId(e.target.value); setErrDesignerId(null) }} value={designerId}>
-                                                                      <option value="">Choose...</option>
-                                                                      <option value="0">No Preferred Designer</option>
+                                                                      <option value="">No Preferred Designer</option>
                                                                       {
                                                                            designers && designers.map(designer => {
                                                                                 return (

@@ -1,7 +1,6 @@
 import { useEffect } from "react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { useHistory } from "react-router";
-import { useState } from "react/cjs/react.development";
 import Swal from "sweetalert2";
 import { Button, Gap } from "../../components/atoms";
 import { TransactionItem } from "../../components/molecules";
@@ -10,21 +9,12 @@ import "./OrderList.scss";
 const OrderList = () => {
 
      const urlAPI = process.env.REACT_APP_API_URL;
-     const [section, setSection] = useState(1);
+     const [status, setStatus] = useState(0);
      const [orders, setOrders] = useState(null);
      const history = useHistory();
 
-
-     const handleChangeToOnGoing = () => {
-          setSection(1);
-     }
-
-     const handleChangeToCompleted = () => {
-          setSection(2);
-     }
-
-     const fetchOrders = async (token) => {
-          const apiFetch = await fetch(urlAPI + `getorders?token=${token}`, {
+     const fetchOrders = async (token, status) => {
+          const apiFetch = await fetch(urlAPI + `getorders/${status}?token=${token}`, {
                method: 'POST',
           }).catch(err => {
                console.log(err);
@@ -47,10 +37,10 @@ const OrderList = () => {
                          history.push('/');
                     });
           } else {
-               fetchOrders(localStorage.getItem('token'));
+               fetchOrders(localStorage.getItem('token'), status);
           }
 
-     }, [history]);
+     }, [history, status]);
 
      return (
           <Fragment>
@@ -60,11 +50,14 @@ const OrderList = () => {
                          <Gap height={40} />
                          <div className="text-center">
                               <div className="btn-group" role="group">
-                                   <Button type={section === 2 ? 1 : 2} onClick={handleChangeToOnGoing}>
+                                   <Button type={status === 0 ? 2 : 1} onClick={() => setStatus(0)}>
                                         <h4 className="my-3 mx-4">Ongoing</h4>
                                    </Button>
-                                   <Button type={section === 2 ? 2 : 1} onClick={handleChangeToCompleted}>
+                                   <Button type={status === 1 ? 2 : 1} onClick={() => setStatus(1)}>
                                         <h4 className="my-3 mx-4">Completed</h4>
+                                   </Button>
+                                   <Button type={status === -1 ? 2 : 1} onClick={() => setStatus(-1)}>
+                                        <h4 className="my-3 mx-4">Cancelled</h4>
                                    </Button>
                               </div>
                          </div>
@@ -79,7 +72,7 @@ const OrderList = () => {
                                              quantity={order.quantity} status={false} />
                                    )
                               })
-                                   : null
+                                   : <p className="text-white">No Transaction</p>
                          }
                     </div>
                </div>

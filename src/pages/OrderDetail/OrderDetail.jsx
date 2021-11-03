@@ -11,6 +11,7 @@ const OrderDetail = () => {
      const urlAPI = process.env.REACT_APP_API_URL;
      const [headerOrder, setHeaderOrder] = useState(null);
      const [detailOrder, setDetailOrder] = useState(null);
+     const [amount, setAmount] = useState(null);
      const { id } = useParams();
      const history = useHistory();
 
@@ -24,6 +25,7 @@ const OrderDetail = () => {
           if (res.success) {
                setHeaderOrder(res.headerOrder);
                setDetailOrder(res.detailOrder);
+               setAmount(res.amount);
                return true;
           } else {
                console.log(apiFetch.error);
@@ -85,6 +87,11 @@ const OrderDetail = () => {
                                                        <Gap height={20} />
                                                        <h4 className="subHeading2">Payment Detail</h4>
                                                        <Gap height={20} />
+                                                       {
+                                                            amount ?
+                                                                 <p className="paragraph">Total Price: <span className="fw-bold">{amount}</span></p>
+                                                                 : null
+                                                       }
                                                        <p className="paragraph">Bank Account: <span className="fw-bold">{headerOrder.bank_name}</span></p>
                                                        <p className="paragraph">Account Name: <span className="fw-bold">{headerOrder.account_name}</span></p>
                                                        <p className="paragraph">Account Number: <span className="fw-bold">{headerOrder.account_number}</span></p>
