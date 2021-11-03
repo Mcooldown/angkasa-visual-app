@@ -2,7 +2,7 @@ import { Sample } from "../../../assets";
 import { Gap, Button } from "../../atoms";
 import "./ServiceCard.scss";
 
-const ServiceCard = ({ title, rangeMin, rangeMax, description, image }) => {
+const ServiceCard = ({ title, description, image, onClick }) => {
      return (
           <div className="cServiceCard card">
                <div className="card-img-top">
@@ -14,10 +14,8 @@ const ServiceCard = ({ title, rangeMin, rangeMax, description, image }) => {
                     <p className="textGray3 paragraph">
                          {description}
                     </p>
-                    <Gap height={30} />
-                    <h5 className="textBlue1 subHeading2">Price Range: Rp.{rangeMin} - Rp{rangeMax}</h5>
                     <Gap height={40} />
-                    <Button type={1}><h5 className="textBlue1 m-0 p-2">Service Details</h5></Button>
+                    <Button type={1} onClick={onClick}><h5 className="textBlue1 m-0 p-2">Service Details</h5></Button>
                </div>
           </div>
      )

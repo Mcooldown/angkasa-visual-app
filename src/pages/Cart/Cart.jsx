@@ -30,7 +30,7 @@ const Cart = () => {
      }
 
      useEffect(() => {
-
+          window.scrollTo(0, 0);
           if (!localStorage.getItem('token')) {
                Swal.fire({ icon: 'error', title: 'error', text: 'Please login first', confirmButtonColor: "#0F70B7" })
                     .then(() => {

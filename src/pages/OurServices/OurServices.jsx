@@ -1,11 +1,17 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Gap, Button } from "../../components/atoms";
 import "./OurServices.scss";
 import OwlCarousel from "react-owl-carousel2";
 import { ServiceCard } from "../../components/molecules";
 import { GraphicDesign, Send, TechDesign, VideoAnimation } from "../../assets";
+import { useEffect } from "react";
+import { useHistory } from "react-router";
 
 const OurServices = () => {
+
+     const urlAPI = process.env.REACT_APP_API_URL;
+     const [products, setProducts] = useState(null);
+     const history = useHistory();
 
      const optionsCarousel = {
           items: 2,
@@ -23,6 +29,28 @@ const OurServices = () => {
                }
           }
      };
+
+     const fetchProducts = async () => {
+          const apiFetch = await fetch(urlAPI + `products`, {
+               method: 'GET',
+          }).catch(err => {
+               console.log(err);
+          });
+          const res = await apiFetch.json();
+
+          if (res.success) {
+               setProducts(res.product);
+               return true;
+          } else {
+               console.log(apiFetch.error);
+               return false;
+          }
+     }
+
+     useEffect(() => {
+          window.scrollTo(0, 0);
+          fetchProducts();
+     }, []);
 
      return (
           <Fragment>
@@ -60,7 +88,13 @@ const OurServices = () => {
                     </div>
                     <Gap height={50} />
                     <OwlCarousel options={optionsCarousel}>
-                         <ServiceCard key={1} title="Service 1" description="halo halo binus halo halo binus halo halo binus" rangeMin={20000} rangeMax={30000} />
+                         {
+                              products && products.map(product => {
+                                   return (
+                                        <ServiceCard key={product.id} title={product.product_name} description={product.product_desc} image={product.product_image} onClick={() => history.push('/services/' + product.id)} />
+                                   )
+                              })
+                         }
                     </OwlCarousel>
                </div>
                <div className="cVideoAnimation">
@@ -69,7 +103,13 @@ const OurServices = () => {
                     </div>
                     <Gap height={50} />
                     <OwlCarousel options={optionsCarousel}>
-                         <ServiceCard key={1} title="Service 1" description="halo halo binus halo halo binus halo halo binus" rangeMin={20000} rangeMax={30000} />
+                         {
+                              products && products.map(product => {
+                                   return (
+                                        <ServiceCard key={product.id} title={product.product_name} description={product.product_desc} image={product.product_image} onClick={() => history.push('/services/' + product.id)} />
+                                   )
+                              })
+                         }
                     </OwlCarousel>
                </div>
                <div className="cTechDesign">
@@ -78,7 +118,13 @@ const OurServices = () => {
                     </div>
                     <Gap height={50} />
                     <OwlCarousel options={optionsCarousel}>
-                         <ServiceCard key={1} title="Service 1" description="halo halo binus halo halo binus halo halo binus" rangeMin={20000} rangeMax={30000} />
+                         {
+                              products && products.map(product => {
+                                   return (
+                                        <ServiceCard key={product.id} title={product.product_name} description={product.product_desc} image={product.product_image} onClick={() => history.push('/services/' + product.id)} />
+                                   )
+                              })
+                         }
                     </OwlCarousel>
                </div>
                <div className="cLeaveMessage">

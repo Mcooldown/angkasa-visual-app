@@ -4,8 +4,13 @@ import { Gap, Input, Select } from "../../components/atoms";
 import "./AboutUs.scss";
 import { Button } from "../../components/atoms";
 import { TestimonyCard } from "../../components/molecules";
+import { useEffect } from "react";
 
 const AboutUs = () => {
+
+     useEffect(() => {
+          window.scrollTo(0, 0);
+     }, []);
 
      return (
           <Fragment>

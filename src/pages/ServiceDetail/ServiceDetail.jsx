@@ -63,6 +63,7 @@ const ServiceDetail = () => {
      }
 
      useEffect(() => {
+          window.scrollTo(0, 0);
           if (id) {
                fetchProducts();
                fetchDesigners();
@@ -230,6 +231,7 @@ const ServiceDetail = () => {
                                                                  <select className={"form-select cFormInput" + (errDesignerId ? ' is-invalid' : '')} id="designerId"
                                                                       onChange={(e) => { setDesignerId(e.target.value); setErrDesignerId(null) }} value={designerId}>
                                                                       <option value="">Choose...</option>
+                                                                      <option value="0">No Preferred Designer</option>
                                                                       {
                                                                            designers && designers.map(designer => {
                                                                                 return (

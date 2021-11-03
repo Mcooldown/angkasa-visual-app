@@ -1,12 +1,19 @@
+import { useEffect } from "react";
 import { Fragment } from "react";
+import { useHistory } from "react-router";
 import { useState } from "react/cjs/react.development";
+import Swal from "sweetalert2";
 import { Button, Gap } from "../../components/atoms";
 import { TransactionItem } from "../../components/molecules";
 import "./OrderList.scss";
 
 const OrderList = () => {
 
+     const urlAPI = process.env.REACT_APP_API_URL;
      const [section, setSection] = useState(1);
+     const [orders, setOrders] = useState(null);
+     const history = useHistory();
+
 
      const handleChangeToOnGoing = () => {
           setSection(1);
@@ -15,6 +22,35 @@ const OrderList = () => {
      const handleChangeToCompleted = () => {
           setSection(2);
      }
+
+     const fetchOrders = async (token) => {
+          const apiFetch = await fetch(urlAPI + `getorders?token=${token}`, {
+               method: 'POST',
+          }).catch(err => {
+               console.log(err);
+          });
+          const res = await apiFetch.json();
+          if (res.success) {
+               setOrders(res.detailOrder);
+               return true;
+          } else {
+               console.log(apiFetch.error);
+               return false;
+          }
+     }
+
+     useEffect(() => {
+          window.scrollTo(0, 0);
+          if (!localStorage.getItem('token')) {
+               Swal.fire({ icon: 'error', title: 'error', text: 'Please login first', confirmButtonColor: "#0F70B7" })
+                    .then(() => {
+                         history.push('/');
+                    });
+          } else {
+               fetchOrders(localStorage.getItem('token'));
+          }
+
+     }, [history]);
 
      return (
           <Fragment>
@@ -36,10 +72,15 @@ const OrderList = () => {
                </div>
                <div className="cOrderListContent">
                     <div className="container-fluid">
-                         <TransactionItem designer={"A"} image={""} packageName={"Sky Package"} price={20000} productName={"Logo Design"}
-                              quantity={2} status={false} />
-                         <TransactionItem designer={"B"} image={""} packageName={"Sky Package"} price={20000} productName={"Logo Design"}
-                              quantity={1} status={true} />
+                         {
+                              (orders && orders.length > 0) ? orders.map(order => {
+                                   return (
+                                        <TransactionItem designer={order.designer_name} image={order.product_image} packageName={order.package_name} price={order.price} productName={order.product_name}
+                                             quantity={order.quantity} status={false} />
+                                   )
+                              })
+                                   : null
+                         }
                     </div>
                </div>
           </Fragment>
