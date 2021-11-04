@@ -75,7 +75,7 @@ const OrderList = () => {
                                         {
                                              orders.length > 0 ? orders.map(order => {
                                                   return (
-                                                       <TransactionItem designer={order.designer_name} image={order.product_image} packageName={order.package_name} price={new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR', maximumSignificantDigits: 1 }).format(order.price)} productName={order.product_name}
+                                                       <TransactionItem designer={order.designer_name} image={order.product_image} packageName={order.package_name} price={new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR' }).format(order.price)} productName={order.product_name}
                                                             quantity={order.quantity} status={false} />
                                                   )
                                              })

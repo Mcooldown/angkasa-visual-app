@@ -117,7 +117,7 @@ const Checkout = () => {
                                              cartItems.length > 0 ? cartItems.map((cartItem) => {
                                                   return (
                                                        <OrderItem key={cartItem.id} id={cartItem.id} image={cartItem.product_image} notes={cartItem.notes} packageName={cartItem.package_name}
-                                                            preferredDesigner={cartItem.designer_name} price={new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR', maximumSignificantDigits: 1 }).format(cartItem.price)} productName={cartItem.product_name} quantity={cartItem.quantity}
+                                                            preferredDesigner={cartItem.designer_name} price={new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR' }).format(cartItem.price)} productName={cartItem.product_name} quantity={cartItem.quantity}
                                                             requestFileLink={cartItem.request_file_link} />
                                                   )
                                              }) : <p className="text-white subHeading2 text-center">No cart items</p>
@@ -142,7 +142,7 @@ const Checkout = () => {
                                              <div className="d-flex justify-content-center align-items-center">
                                                   <p className="m-0 paragraph">Total Price: </p>
                                                   <Gap width={15} />
-                                                  <h1 className="subHeading2 text-danger">{new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR', maximumSignificantDigits: 1 }).format(subTotal)}</h1>
+                                                  <h1 className="subHeading2 text-danger">{new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR' }).format(subTotal)}</h1>
                                              </div>
                                         }
                                         <Gap height={40} />

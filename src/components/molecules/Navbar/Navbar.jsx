@@ -49,6 +49,7 @@ const Navbar = () => {
                setIsAuth(true);
           } else {
                setIsAuth(false);
+               localStorage.clear();
                Swal.fire({ icon: 'error', title: "error", text: "Your session are expired. Please login again", confirmButtonColor: "#0F70B7" })
                     .then(() => {
                          history.push('/');

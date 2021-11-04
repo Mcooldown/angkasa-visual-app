@@ -162,13 +162,13 @@ const ServiceDetail = () => {
                                                   products.length > 0 ? products.map(product => {
                                                        return (
 
-                                                            <div className="col-lg-6" key={product.product_package_id}>
+                                                            <div className="col-lg-6 my-3" key={product.product_package_id}>
                                                                  <div className="cCardPackage border">
                                                                       <div className="cCardPackageHeader bgBlue1">
                                                                            <h1 className="heading2 text-center text-white">{product.package_name}</h1>
                                                                       </div>
                                                                       <div className="card-body p-lg-5 textBlue2">
-                                                                           <h1 className="heading1 text-center">{new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR', maximumSignificantDigits: 1 }).format(product.price)}/design</h1>
+                                                                           <h1 className="heading1 text-center">{new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR' }).format(product.price)}/design</h1>
                                                                            <Gap height={30} />
                                                                            <h4 className="subHeading2 fw-normal">
                                                                                 {

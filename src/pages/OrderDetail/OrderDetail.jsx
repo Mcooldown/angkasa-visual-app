@@ -70,7 +70,7 @@ const OrderDetail = () => {
                                              detailOrder.length > 0 ? detailOrder.map((orderItem) => {
                                                   return (
                                                        <OrderItem key={orderItem.id} id={orderItem.id} image={orderItem.product_image} notes={orderItem.notes} packageName={orderItem.package_name}
-                                                            preferredDesigner={orderItem.designer_name} price={new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR', maximumSignificantDigits: 1 }).format(orderItem.price)} productName={orderItem.product_name} quantity={orderItem.quantity}
+                                                            preferredDesigner={orderItem.designer_name} price={new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR' }).format(orderItem.price)} productName={orderItem.product_name} quantity={orderItem.quantity}
                                                             requestFileLink={orderItem.request_file_link} />
                                                   )
                                              }) : <p className="subHeading2 text-center text-white">No order items</p>
@@ -93,7 +93,7 @@ const OrderDetail = () => {
                                                             <Gap height={20} />
                                                             <h4 className="subHeading2">Payment Detail</h4>
                                                             <Gap height={20} />
-                                                            <p className="paragraph">Total Price: <span className="fw-bold">{new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR', maximumSignificantDigits: 1 }).format(amount)}</span></p>
+                                                            <p className="paragraph">Total Price: <span className="fw-bold">{new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR' }).format(amount)}</span></p>
 
                                                             <p className="paragraph">Bank Account: <span className="fw-bold">{headerOrder.bank_name}</span></p>
                                                             <p className="paragraph">Account Name: <span className="fw-bold">{headerOrder.account_name}</span></p>
