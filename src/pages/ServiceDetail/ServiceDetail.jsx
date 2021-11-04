@@ -2,7 +2,7 @@ import { Fragment, useState, useEffect } from "react"
 import { useHistory, useParams } from "react-router";
 import Swal from "sweetalert2";
 import { Sample, Send } from "../../assets";
-import { Gap, Button, Input } from "../../components/atoms";
+import { Gap, Button, Input, Loader } from "../../components/atoms";
 import "./ServiceDetail.scss";
 
 const ServiceDetail = () => {
@@ -122,16 +122,22 @@ const ServiceDetail = () => {
           }
      }
 
+     const splitDescription = (description) => {
+
+          const arrayDescription = description.split(";");
+          return arrayDescription;
+     }
+
      return (
           <Fragment>
                <div className="cServiceDetailHeader">
                     <div className="container-fluid">
                          <div className="row align-items-center justify-content-between">
                               {
-                                   products ?
+                                   (!isLoading && products) ?
                                         <Fragment>
                                              <div className="col-lg-5">
-                                                  <img src={products[0].image ? products[0].image : Sample} alt="serviceDetail" className="w-100" />
+                                                  <img src={products[0].product_image ? products[0].product_image : Sample} alt="serviceDetail" className="w-100" />
                                              </div>
                                              <div className="col-lg-7 ps-lg-5 text-white">
                                                   <h1 className="title">{products[0].product_name}</h1>
@@ -139,9 +145,7 @@ const ServiceDetail = () => {
                                                   <p className="paragraph m-0">{products[0].product_desc}</p>
                                              </div>
                                         </Fragment>
-                                        : <div className="col-12 text-center">
-                                             <h5 className="text-white">Please wait...</h5>
-                                        </div>
+                                        : <Loader isWhite={true} />
                               }
                          </div>
                     </div>
@@ -152,25 +156,41 @@ const ServiceDetail = () => {
                          <Gap height={60} />
                          <div className="row">
                               {
-                                   products && products.map(product => {
-                                        return (
+                                   products ?
+                                        <Fragment>
+                                             {
+                                                  products.length > 0 ? products.map(product => {
+                                                       return (
 
-                                             <div className="col-lg-6" key={product.product_package_id}>
-                                                  <div className="cCardPackage border">
-                                                       <div className="cCardPackageHeader bgBlue1">
-                                                            <h1 className="heading2 text-center text-white">{product.package_name}</h1>
-                                                       </div>
-                                                       <div className="card-body p-lg-5 textBlue2">
-                                                            <h1 className="heading1 text-center">Rp {product.price}/Design</h1>
-                                                            <Gap height={30} />
-                                                            <h4 className="subHeading2 fw-normal">
-                                                                 <i className="fa fa-star"></i> {product.package_description}
-                                                            </h4>
-                                                       </div>
-                                                  </div>
-                                             </div>
-                                        )
-                                   })
+                                                            <div className="col-lg-6" key={product.product_package_id}>
+                                                                 <div className="cCardPackage border">
+                                                                      <div className="cCardPackageHeader bgBlue1">
+                                                                           <h1 className="heading2 text-center text-white">{product.package_name}</h1>
+                                                                      </div>
+                                                                      <div className="card-body p-lg-5 textBlue2">
+                                                                           <h1 className="heading1 text-center">{new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR', maximumSignificantDigits: 1 }).format(product.price)}/design</h1>
+                                                                           <Gap height={30} />
+                                                                           <h4 className="subHeading2 fw-normal">
+                                                                                {
+                                                                                     splitDescription(product.package_description).map((description) => {
+                                                                                          return (
+                                                                                               <div>
+                                                                                                    <i className="fa fa-star me-1"></i>
+                                                                                                    {description}
+                                                                                                    <Gap height={10} />
+                                                                                               </div>
+                                                                                          )
+                                                                                     })
+                                                                                }
+                                                                           </h4>
+                                                                      </div>
+                                                                 </div>
+                                                            </div>
+                                                       )
+                                                  }) : <h4 className="text-center textBlue1 subHeading2">No package available</h4>
+                                             }
+                                        </Fragment>
+                                        : <Loader isWhite={false} />
                               }
                          </div>
                     </div>
@@ -178,94 +198,100 @@ const ServiceDetail = () => {
                <div className="cOrderToCart">
                     <div className="container-fluid">
                          {
-                              localStorage.getItem('token') && products ?
-                                   <div className="row align-items-center justify-content-between">
-                                        <div className="col-lg-5 text-end my-3">
-                                             <h1 className="heading1 textBlue1">Drop Your Order Here!</h1>
-                                             <Gap height={10} />
-                                             <p className="paragraph textBlue1">
-                                                  Before ordering, please carefully read our order guidelines below:
-                                             </p>
-                                             <Gap height={10} />
-                                             <Button type={2}>
-                                                  <h5 className="m-1">Order Guidelines</h5>
-                                             </Button>
-                                        </div>
-                                        <div className="col-lg-7 ps-lg-5 my-3">
-                                             <div className="cCardContact">
-                                                  <div className="card-body">
+                              products ?
+                                   <Fragment>
+                                        {
+                                             localStorage.getItem('token') && products ?
+                                                  <div className="row align-items-center justify-content-between">
+                                                       <div className="col-lg-5 text-end my-3">
+                                                            <h1 className="heading1 textBlue1">Drop Your Order Here!</h1>
+                                                            <Gap height={10} />
+                                                            <p className="paragraph textBlue1">
+                                                                 Before ordering, please carefully read our order guidelines below:
+                                                            </p>
+                                                            <Gap height={10} />
+                                                            <Button type={2}>
+                                                                 <h5 className="m-1">Order Guidelines</h5>
+                                                            </Button>
+                                                       </div>
+                                                       <div className="col-lg-7 ps-lg-5 my-3">
+                                                            <div className="cCardContact">
+                                                                 <div className="card-body">
 
-                                                       {/* Form */}
-                                                       <div className="row align-items-center">
-                                                            <label htmlFor="productPackageId" className="col-lg-4">
-                                                                 <h1 class="paragraph fw-bold">Package</h1>
-                                                            </label>
-                                                            <div className="col-lg-8">
-                                                                 <select className={"form-select cFormInput" + (errProductPackageId ? ' is-invalid' : '')} id="productPackageId"
-                                                                      onChange={(e) => { setProductPackageId(e.target.value); setErrProductPackageId(null) }} value={productPackageId}>
-                                                                      <option value="">Choose...</option>
-                                                                      {
-                                                                           products && products.map(product => {
-                                                                                return (
-                                                                                     <option value={product.product_package_id}>{product.package_name}</option>
-                                                                                )
-                                                                           })
-                                                                      }
-                                                                 </select>
-                                                                 {
-                                                                      errProductPackageId &&
-                                                                      <small className="text-danger">{errProductPackageId}</small>
-                                                                 }
+                                                                      {/* Form */}
+                                                                      <div className="row align-items-center">
+                                                                           <label htmlFor="productPackageId" className="col-lg-4">
+                                                                                <h1 class="paragraph fw-bold">Package</h1>
+                                                                           </label>
+                                                                           <div className="col-lg-8">
+                                                                                <select className={"form-select cFormInput" + (errProductPackageId ? ' is-invalid' : '')} id="productPackageId"
+                                                                                     onChange={(e) => { setProductPackageId(e.target.value); setErrProductPackageId(null) }} value={productPackageId}>
+                                                                                     <option value="">Choose...</option>
+                                                                                     {
+                                                                                          products && products.map(product => {
+                                                                                               return (
+                                                                                                    <option value={product.product_package_id}>{product.package_name}</option>
+                                                                                               )
+                                                                                          })
+                                                                                     }
+                                                                                </select>
+                                                                                {
+                                                                                     errProductPackageId &&
+                                                                                     <small className="text-danger">{errProductPackageId}</small>
+                                                                                }
+                                                                           </div>
+                                                                      </div>
+                                                                      <Gap height={30} />
+                                                                      <div className="row align-items-center">
+                                                                           <label htmlFor="productPackageId" className="col-lg-4">
+                                                                                <h1 class="paragraph fw-bold">Preferred Designer</h1>
+                                                                           </label>
+                                                                           <div className="col-lg-8">
+                                                                                <select className={"form-select cFormInput" + (errDesignerId ? ' is-invalid' : '')} id="designerId"
+                                                                                     onChange={(e) => { setDesignerId(e.target.value); setErrDesignerId(null) }} value={designerId}>
+                                                                                     <option value="">No Preferred Designer</option>
+                                                                                     {
+                                                                                          designers && designers.map(designer => {
+                                                                                               return (
+                                                                                                    <option value={designer.designer_id}>{designer.name}</option>
+                                                                                               )
+                                                                                          })
+                                                                                     }
+                                                                                </select>
+                                                                                {
+                                                                                     errDesignerId &&
+                                                                                     <small className="text-danger">{errDesignerId}</small>
+                                                                                }
+                                                                           </div>
+                                                                      </div>
+                                                                      <Gap height={30} />
+                                                                      <Input label="Quantity" id="quantity" name="quantity" type="number" min={1} placeholder="Input your quantity here"
+                                                                           onChange={(e) => { setQuantity(e.target.value); setErrQuantity(null) }} error={errQuantity} value={quantity} />
+                                                                      <Gap height={30} />
+                                                                      <Input label="Deadline" id="deadline" name="deadline" type="date" placeholder="Input deadline"
+                                                                           onChange={(e) => { setDeadline(e.target.value); setErrDeadline(null) }} error={errDeadline} value={deadline} />
+                                                                      <Gap height={30} />
+                                                                      <Input label="Request File Link" id="requestFileLink" name="requestFileLink" type="text" placeholder="Input file link"
+                                                                           onChange={(e) => { setRequestFileLink(e.target.value); setErrRequestFileLink(null) }} error={errRequestFileLink} value={requestFileLink} />
+                                                                      <Gap height={10} />
+                                                                      <Button type={1}>
+                                                                           <h5 className="paragraph textBlue1 my-1">Download request file template</h5>
+                                                                      </Button>
+                                                                      <Gap height={30} />
+                                                                      <Input label="Notes" id="notes" name="notes" type="text" placeholder="Input your notes here"
+                                                                           onChange={(e) => { setNotes(e.target.value); setErrNotes(null) }} error={errNotes} value={notes} />
+                                                                      <Gap height={40} />
+                                                                      <Button isFull type={2} onClick={handleSubmit} isLoading={isLoading}>
+                                                                           <h5 className="subHeading3 texBlue1">Add to Cart</h5>
+                                                                      </Button>
+                                                                 </div>
                                                             </div>
                                                        </div>
-                                                       <Gap height={30} />
-                                                       <div className="row align-items-center">
-                                                            <label htmlFor="productPackageId" className="col-lg-4">
-                                                                 <h1 class="paragraph fw-bold">Preferred Designer</h1>
-                                                            </label>
-                                                            <div className="col-lg-8">
-                                                                 <select className={"form-select cFormInput" + (errDesignerId ? ' is-invalid' : '')} id="designerId"
-                                                                      onChange={(e) => { setDesignerId(e.target.value); setErrDesignerId(null) }} value={designerId}>
-                                                                      <option value="">No Preferred Designer</option>
-                                                                      {
-                                                                           designers && designers.map(designer => {
-                                                                                return (
-                                                                                     <option value={designer.designer_id}>{designer.name}</option>
-                                                                                )
-                                                                           })
-                                                                      }
-                                                                 </select>
-                                                                 {
-                                                                      errDesignerId &&
-                                                                      <small className="text-danger">{errDesignerId}</small>
-                                                                 }
-                                                            </div>
-                                                       </div>
-                                                       <Gap height={30} />
-                                                       <Input label="Quantity" id="quantity" name="quantity" type="number" min={1} placeholder="Input your quantity here"
-                                                            onChange={(e) => { setQuantity(e.target.value); setErrQuantity(null) }} error={errQuantity} value={quantity} />
-                                                       <Gap height={30} />
-                                                       <Input label="Deadline" id="deadline" name="deadline" type="date" placeholder="Input deadline"
-                                                            onChange={(e) => { setDeadline(e.target.value); setErrDeadline(null) }} error={errDeadline} value={deadline} />
-                                                       <Gap height={30} />
-                                                       <Input label="Request File Link" id="requestFileLink" name="requestFileLink" type="text" placeholder="Input file link"
-                                                            onChange={(e) => { setRequestFileLink(e.target.value); setErrRequestFileLink(null) }} error={errRequestFileLink} value={requestFileLink} />
-                                                       <Gap height={10} />
-                                                       <Button type={1}>
-                                                            <h5 className="paragraph textBlue1 my-1">Download request file template</h5>
-                                                       </Button>
-                                                       <Gap height={30} />
-                                                       <Input label="Notes" id="notes" name="notes" type="text" placeholder="Input your notes here"
-                                                            onChange={(e) => { setNotes(e.target.value); setErrNotes(null) }} error={errNotes} value={notes} />
-                                                       <Gap height={40} />
-                                                       <Button isFull type={2} onClick={handleSubmit} isLoading={isLoading}>
-                                                            <h5 className="subHeading3 texBlue1">Add to Cart</h5>
-                                                       </Button>
                                                   </div>
-                                             </div>
-                                        </div>
-                                   </div>
-                                   : <h1 className="heading2 textBlue1 text-center">Please login first before order</h1>
+                                                  : <h1 className="heading2 textBlue1 text-center">Please login first before order</h1>
+                                        }
+                                   </Fragment>
+                                   : <Loader isWhite={false} />
                          }
                     </div>
                </div>

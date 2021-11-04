@@ -53,7 +53,7 @@ const Login = ({ changeSection, setIsAuth, isAuth, setAuthUser }) => {
                     if (res) {
                          setIsAuth(true);
                          setAuthUser();
-                         history.push('/');
+                         history.push('/our-services');
                     }
                     setIsLoading(false);
                })

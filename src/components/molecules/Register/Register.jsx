@@ -1,8 +1,7 @@
 import { Fragment, useState } from "react";
 import { useHistory } from "react-router";
 import { CustomerSymbol, DesignerSymbol, RegisterSuccess } from "../../../assets";
-import { Gap, Input, Select, Button } from "../../atoms";
-import RadioButton from "../../atoms/RadioButton/RadioButton";
+import { Gap, Input, Select, Button, RadioButton } from "../../atoms";
 import "./Register.scss";
 
 const Register = ({ changeSection }) => {

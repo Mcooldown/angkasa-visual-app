@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { Gap, Button } from "../../components/atoms";
+import { Gap, Button, Loader } from "../../components/atoms";
 import "./OurServices.scss";
 import OwlCarousel from "react-owl-carousel2";
 import { ServiceCard } from "../../components/molecules";
@@ -12,6 +12,7 @@ const OurServices = () => {
      const urlAPI = process.env.REACT_APP_API_URL;
      const [products, setProducts] = useState(null);
      const history = useHistory();
+     const [isLoading, setIsLoading] = useState(true);
 
      const optionsCarousel = {
           items: 2,
@@ -48,8 +49,11 @@ const OurServices = () => {
      }
 
      useEffect(() => {
+          setIsLoading(true)
           window.scrollTo(0, 0);
-          fetchProducts();
+          fetchProducts().then(res => {
+               if (res) setIsLoading(false);
+          });
      }, []);
 
      return (
@@ -87,45 +91,61 @@ const OurServices = () => {
                          <h1 className="cTitleCarousel text-white text-end">Graphic Design</h1>
                     </div>
                     <Gap height={50} />
-                    <OwlCarousel options={optionsCarousel}>
-                         {
-                              products && products.map(product => {
-                                   return (
-                                        <ServiceCard key={product.id} title={product.product_name} description={product.product_desc} image={product.product_image} onClick={() => history.push('/services/' + product.id)} />
-                                   )
-                              })
-                         }
-                    </OwlCarousel>
+                    {
+                         (!isLoading && products) ?
+                              <OwlCarousel options={optionsCarousel}>
+                                   {
+                                        products.length > 0 ? products.map(product => {
+                                             if (product.product_category === 'Graphic Design and Editing') {
+                                                  return (
+                                                       <ServiceCard key={product.id} title={product.product_name} description={product.product_desc} image={product.product_image} onClick={() => history.push('/services/' + product.id)} />
+                                                  )
+                                             } else return null;
+                                        }) : null
+                                   }
+                              </OwlCarousel>
+                              : <Loader isWhite={false} />
+                    }
                </div>
                <div className="cVideoAnimation">
                     <div className="container-fluid">
                          <h1 className="cTitleCarousel text-white">Video &#38; Animation</h1>
                     </div>
                     <Gap height={50} />
-                    <OwlCarousel options={optionsCarousel}>
-                         {
-                              products && products.map(product => {
-                                   return (
-                                        <ServiceCard key={product.id} title={product.product_name} description={product.product_desc} image={product.product_image} onClick={() => history.push('/services/' + product.id)} />
-                                   )
-                              })
-                         }
-                    </OwlCarousel>
+                    {
+                         (!isLoading && products) ?
+                              <OwlCarousel options={optionsCarousel}>
+                                   {
+                                        products.length > 0 ? products.map(product => {
+                                             if (product.product_category === 'Video and Animation') {
+                                                  return (
+                                                       <ServiceCard key={product.id} title={product.product_name} description={product.product_desc} image={product.product_image} onClick={() => history.push('/services/' + product.id)} />
+                                                  )
+                                             } else return null;
+                                        }) : null
+                                   }
+                              </OwlCarousel> : <Loader isWhite={false} />
+                    }
                </div>
                <div className="cTechDesign">
                     <div className="container-fluid">
                          <h1 className="cTitleCarousel text-white text-end">Tech Design</h1>
                     </div>
                     <Gap height={50} />
-                    <OwlCarousel options={optionsCarousel}>
-                         {
-                              products && products.map(product => {
-                                   return (
-                                        <ServiceCard key={product.id} title={product.product_name} description={product.product_desc} image={product.product_image} onClick={() => history.push('/services/' + product.id)} />
-                                   )
-                              })
-                         }
-                    </OwlCarousel>
+                    {
+                         (!isLoading && products) ?
+                              <OwlCarousel options={optionsCarousel}>
+                                   {
+                                        products ? products.map(product => {
+                                             if (product.product_category === 'Tech Design') {
+                                                  return (
+                                                       <ServiceCard key={product.id} title={product.product_name} description={product.product_desc} image={product.product_image} onClick={() => history.push('/services/' + product.id)} />
+                                                  )
+                                             } else return null;
+                                        }) : null
+                                   }
+                              </OwlCarousel> : <Loader isWhite={false} />
+                    }
                </div>
                <div className="cLeaveMessage">
                     <div className="container-fluid">

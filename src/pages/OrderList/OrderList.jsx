@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Fragment, useState } from "react";
 import { useHistory } from "react-router";
 import Swal from "sweetalert2";
-import { Button, Gap } from "../../components/atoms";
+import { Button, Gap, Loader } from "../../components/atoms";
 import { TransactionItem } from "../../components/molecules";
 import "./OrderList.scss";
 
@@ -12,6 +12,7 @@ const OrderList = () => {
      const [status, setStatus] = useState(0);
      const [orders, setOrders] = useState(null);
      const history = useHistory();
+     const [isLoading, setIsLoading] = useState(true);
 
      const fetchOrders = async (token, status) => {
           const apiFetch = await fetch(urlAPI + `getorders/${status}?token=${token}`, {
@@ -37,7 +38,10 @@ const OrderList = () => {
                          history.push('/');
                     });
           } else {
-               fetchOrders(localStorage.getItem('token'), status);
+               setIsLoading(true);
+               fetchOrders(localStorage.getItem('token'), status).then((res) => {
+                    if (res) setIsLoading(false);
+               });
           }
 
      }, [history, status]);
@@ -66,13 +70,19 @@ const OrderList = () => {
                <div className="cOrderListContent">
                     <div className="container-fluid">
                          {
-                              (orders && orders.length > 0) ? orders.map(order => {
-                                   return (
-                                        <TransactionItem designer={order.designer_name} image={order.product_image} packageName={order.package_name} price={order.price} productName={order.product_name}
-                                             quantity={order.quantity} status={false} />
-                                   )
-                              })
-                                   : <p className="text-white">No Transaction</p>
+                              (!isLoading && orders) ?
+                                   <Fragment>
+                                        {
+                                             orders.length > 0 ? orders.map(order => {
+                                                  return (
+                                                       <TransactionItem designer={order.designer_name} image={order.product_image} packageName={order.package_name} price={new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR', maximumSignificantDigits: 1 }).format(order.price)} productName={order.product_name}
+                                                            quantity={order.quantity} status={false} />
+                                                  )
+                                             })
+                                                  : <p className="subHeading3 text-center text-white">No orders</p>
+                                        }
+                                   </Fragment>
+                                   : <Loader isWhite />
                          }
                     </div>
                </div>

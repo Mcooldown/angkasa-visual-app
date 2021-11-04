@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react"
 import { useHistory } from "react-router";
 import Swal from "sweetalert2";
-import { Gap, Button } from "../../components/atoms"
+import { Gap, Button, Loader } from "../../components/atoms"
 import { OrderItem } from "../../components/molecules";
 import "./Cart.scss";
 
@@ -66,13 +66,19 @@ const Cart = () => {
                          <h1 className="title textBlue1 text-center">My Cart</h1>
                          <Gap height={60} />
                          {
-                              (cartItems && cartItems.length > 0) ? cartItems.map((cartItem) => {
-                                   return (
-                                        <OrderItem key={cartItem.id} id={cartItem.id} image={cartItem.product_image} notes={cartItem.notes} onDelete={deleteCartItem} packageName={cartItem.package_name}
-                                             preferredDesigner={cartItem.designer_name} price={cartItem.price} productName={cartItem.product_name} quantity={cartItem.quantity}
-                                             requestFileLink={cartItem.request_file_link} />
-                                   )
-                              }) : <p className="paragraph text-muted text-center mt-4">No cart items</p>
+                              cartItems ?
+                                   <Fragment>
+                                        {
+                                             cartItems.length > 0 ? cartItems.map((cartItem) => {
+                                                  return (
+                                                       <OrderItem key={cartItem.id} id={cartItem.id} image={cartItem.product_image} notes={cartItem.notes} onDelete={deleteCartItem} packageName={cartItem.package_name}
+                                                            preferredDesigner={cartItem.designer_name} price={new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR', maximumSignificantDigits: 1 }).format(cartItem.price)} productName={cartItem.product_name} quantity={cartItem.quantity}
+                                                            requestFileLink={cartItem.request_file_link} />
+                                                  )
+                                             }) : <p className="paragraph text-muted text-center mt-4">No cart items</p>
+                                        }
+                                   </Fragment>
+                                   : <Loader isWhite={false} />
                          }
                          <Gap height={100} />
                          {
@@ -80,7 +86,7 @@ const Cart = () => {
                                    <div className="d-flex justify-content-end align-items-center">
                                         <p className="m-0 paragraph">Subtotal: </p>
                                         <Gap width={15} />
-                                        <h1 className="heading2 text-danger">Rp {subTotal}</h1>
+                                        <h1 className="heading2 text-danger">{new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR', maximumSignificantDigits: 1 }).format(subTotal)}</h1>
                                    </div> : null
                          }
                          <Gap height={50} />

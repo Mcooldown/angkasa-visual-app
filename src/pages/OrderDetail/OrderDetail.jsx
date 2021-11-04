@@ -1,6 +1,6 @@
 import "./OrderDetail.scss";
 import { Fragment, useState } from 'react';
-import { Gap, Button } from "../../components/atoms";
+import { Gap, Button, Loader } from "../../components/atoms";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 import { useHistory, useParams } from "react-router";
@@ -64,51 +64,55 @@ const OrderDetail = () => {
                     <div className="container-fluid">
                          <Gap height={30} />
                          {
-                              detailOrder ? detailOrder.map((orderItem) => {
-                                   return (
-                                        <OrderItem key={orderItem.id} id={orderItem.id} image={orderItem.product_image} notes={orderItem.notes} packageName={orderItem.package_name}
-                                             preferredDesigner={orderItem.designer_name} price={orderItem.price} productName={orderItem.product_name} quantity={orderItem.quantity}
-                                             requestFileLink={orderItem.request_file_link} />
-                                   )
-                              }) : <p className="text-white">Please wait...</p>
+                              detailOrder ?
+                                   <Fragment>
+                                        {
+                                             detailOrder.length > 0 ? detailOrder.map((orderItem) => {
+                                                  return (
+                                                       <OrderItem key={orderItem.id} id={orderItem.id} image={orderItem.product_image} notes={orderItem.notes} packageName={orderItem.package_name}
+                                                            preferredDesigner={orderItem.designer_name} price={new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR', maximumSignificantDigits: 1 }).format(orderItem.price)} productName={orderItem.product_name} quantity={orderItem.quantity}
+                                                            requestFileLink={orderItem.request_file_link} />
+                                                  )
+                                             }) : <p className="subHeading2 text-center text-white">No order items</p>
+                                        }
+                                   </Fragment>
+                                   : <Loader isWhite={true} />
                          }
                     </div>
                </div>
-               <div className="cOrderHeaderHeader"></div>
-               <div className="cOrderHeaderContent">
-                    <div className="container-fluid">
-                         <div className="row justify-content-center">
-                              <div className="col-lg-6 col-md-8">
-                                   <div className="card shadow-sm" style={{ borderRadius: "20px" }}>
-                                        <div className="card-body text-center">
-                                             {
-                                                  headerOrder &&
-                                                  <Fragment>
-                                                       <Gap height={20} />
-                                                       <h4 className="subHeading2">Payment Detail</h4>
-                                                       <Gap height={20} />
-                                                       {
-                                                            amount ?
-                                                                 <p className="paragraph">Total Price: <span className="fw-bold">{amount}</span></p>
-                                                                 : null
-                                                       }
-                                                       <p className="paragraph">Bank Account: <span className="fw-bold">{headerOrder.bank_name}</span></p>
-                                                       <p className="paragraph">Account Name: <span className="fw-bold">{headerOrder.account_name}</span></p>
-                                                       <p className="paragraph">Account Number: <span className="fw-bold">{headerOrder.account_number}</span></p>
-                                                       <p className="paragraph">Payment Proof: <span className="fw-bold">{headerOrder.payment_proof}</span></p>
-                                                       <Gap height={20} />
-                                                  </Fragment>
-                                             }
+               {
+                    (headerOrder && amount) ?
+                         <Fragment>
+                              <div className="cOrderHeaderHeader"></div>
+                              <div className="cOrderHeaderContent">
+                                   <div className="container-fluid">
+                                        <div className="row justify-content-center">
+                                             <div className="col-lg-6 col-md-8">
+                                                  <div className="card shadow-sm" style={{ borderRadius: "20px" }}>
+                                                       <div className="card-body text-center">
+                                                            <Gap height={20} />
+                                                            <h4 className="subHeading2">Payment Detail</h4>
+                                                            <Gap height={20} />
+                                                            <p className="paragraph">Total Price: <span className="fw-bold">{new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR', maximumSignificantDigits: 1 }).format(amount)}</span></p>
+
+                                                            <p className="paragraph">Bank Account: <span className="fw-bold">{headerOrder.bank_name}</span></p>
+                                                            <p className="paragraph">Account Name: <span className="fw-bold">{headerOrder.account_name}</span></p>
+                                                            <p className="paragraph">Account Number: <span className="fw-bold">{headerOrder.account_number}</span></p>
+                                                            <p className="paragraph">Payment Proof: <span className="fw-bold">{headerOrder.payment_proof}</span></p>
+                                                            <Gap height={20} />
+                                                       </div>
+                                                  </div>
+                                             </div>
                                         </div>
+                                        <Gap height={80} />
+                                        <Button isFull type={2} onClick={handleFinish}>
+                                             <h5 className="subHeading3 texBlue1">FINISH</h5>
+                                        </Button>
                                    </div>
                               </div>
-                         </div>
-                         <Gap height={80} />
-                         <Button isFull type={2} onClick={handleFinish}>
-                              <h5 className="subHeading3 texBlue1">FINISH</h5>
-                         </Button>
-                    </div>
-               </div>
+                         </Fragment>
+                         : null
+               }
           </Fragment>
      )
 }

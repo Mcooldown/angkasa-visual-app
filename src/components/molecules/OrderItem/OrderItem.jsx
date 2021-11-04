@@ -25,7 +25,7 @@ const OrderItem = ({ id, image, productName, price, packageName, quantity, prefe
                          </div>
                          <div className="col-lg-3 my-3 text-end">
                               <p className="paragraph textGray2 m-0"><b>Price:</b></p>
-                              <h1 className="subHeading1 text-danger">Rp {price}</h1>
+                              <h1 className="subHeading1 text-danger">{price}</h1>
                               <Gap height={20} />
                               {
                                    onDelete &&
