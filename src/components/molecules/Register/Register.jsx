@@ -26,8 +26,8 @@ const Register = ({ changeSection }) => {
      const [errAddress, setErrAddress] = useState(null);
      const [password, setPassword] = useState('');
      const [errPassword, setErrPassword] = useState(null);
-     const [isDesigner, setIsDesigner] = useState(false);
-     const [isCustomer, setIsCustomer] = useState(false);
+     const [isDesigner, setIsDesigner] = useState(0);
+     const [isCustomer, setIsCustomer] = useState(0);
 
      // Designer form apply
      const [idCard, setIdCard] = useState('');
@@ -106,8 +106,8 @@ const Register = ({ changeSection }) => {
      }
 
      const handleSelectRole = () => {
-          if (isDesigner) setRegisterSection(3);
-          else if (isCustomer) {
+          if (isDesigner === 1) setRegisterSection(3);
+          else if (isCustomer === 1) {
                setIsLoading(true);
                addUserToAPI().then((res) => {
                     if (res) {
@@ -259,14 +259,14 @@ const Register = ({ changeSection }) => {
                                    <Gap height={80} />
                                    <div className="row">
                                         <div className="col-lg-6">
-                                             <div className={"cCardRole " + (isDesigner ? "selected" : "")} onClick={() => setIsDesigner(!isDesigner)}>
+                                             <div className={"cCardRole " + (isDesigner ? "selected" : "")} onClick={() => setIsDesigner(isDesigner === 1 ? 0 : 1)}>
                                                   <h1 className="subHeading2 text-center">DESIGNER</h1>
                                                   <Gap height={20} />
                                                   <img src={DesignerSymbol} className="cImageRole" alt="designerSymbol" />
                                              </div>
                                         </div>
                                         <div className="col-lg-6">
-                                             <div className={"cCardRole " + (isCustomer ? "selected" : "")} onClick={() => setIsCustomer(!isCustomer)}>
+                                             <div className={"cCardRole " + (isCustomer ? "selected" : "")} onClick={() => setIsCustomer(isCustomer === 1 ? 0 : 1)}>
                                                   <h1 className="subHeading2 text-center">CUSTOMER</h1>
                                                   <Gap height={20} />
                                                   <img src={CustomerSymbol} className="cImageRole" alt="customerSymbol" />

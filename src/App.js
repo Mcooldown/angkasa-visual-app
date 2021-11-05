@@ -11,6 +11,7 @@ import 'react-owl-carousel2/src/owl.carousel.css';
 import { AboutUs, Cart, Checkout, DesignerOrderList, Home, OrderDetail, OurServices, ServiceDetail} from './pages';
 import { Footer, Navbar } from './components/molecules';
 import OrderList from './pages/OrderList/OrderList';
+import DesignerList from './pages/DesignerList/DesignerList';
 
 function App() {
   return (
@@ -45,6 +46,9 @@ function App() {
               </Route>
               <Route path="/designer/orders" exact>
                     <DesignerOrderList />
+              </Route>
+              <Route path="/admin/designers" exact>
+                    <DesignerList />
               </Route>
           </Switch>
         </div>

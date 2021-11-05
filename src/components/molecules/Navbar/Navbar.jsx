@@ -90,6 +90,10 @@ const Navbar = () => {
                                                                  {authUser.name}
                                                             </a>
                                                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                                 {
+                                                                      authUser.user_id &&
+                                                                      <Link to="/designer/orders" className="text-decoration-none text-reset"><li className="dropdown-item">Designer Orders</li></Link>
+                                                                 }
                                                                  <Link to="/cart" className="text-decoration-none text-reset"><li className="dropdown-item">Cart</li></Link>
                                                                  <Link to="/orders" className="text-decoration-none text-reset"><li className="dropdown-item">Orders</li></Link>
                                                                  <li onClick={logout} className="dropdown-item" style={{ cursor: "pointer" }}>Logout</li>
