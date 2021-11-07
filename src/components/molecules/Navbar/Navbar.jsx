@@ -5,11 +5,12 @@ import { Logo } from '../../../assets';
 import { Gap, Button, } from '../../atoms';
 import './navbar.scss';
 import Swal from "sweetalert2";
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 
 const Navbar = () => {
 
-     const history = useHistory()
+     const history = useHistory();
+     const location = useLocation();
      const [isLogin, setIsLogin] = useState(false);
      const [isAuth, setIsAuth] = useState(false);
      const [authUser, setAuthUser] = useState(null);
@@ -45,6 +46,20 @@ const Navbar = () => {
           });
           const res = await apiFetch.json();
           if (res.user) {
+               let pass = true;
+               if (location.pathname === '/admin/designers' && res.user.is_admin === 0 ||
+                    location.pathname === '/cart' && res.user.is_customer === 0 ||
+                    location.pathname === '/orders' && res.user.is_customer === 0 ||
+                    location.pathname === '/checkout' && res.user.is_customer === 0 ||
+                    location.pathname === '/designer/orders' && res.user.is_designer === 0) {
+                    pass = false;
+               }
+
+               if (!pass) {
+                    history.push('/')
+                    Swal.fire({ icon: 'error', title: "error", text: "Unauthorized access", confirmButtonColor: "#0F70B7" });
+               }
+
                setAuthUser(res.user);
                setIsAuth(true);
           } else {
@@ -91,11 +106,22 @@ const Navbar = () => {
                                                             </a>
                                                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                                                                  {
-                                                                      authUser.user_id &&
-                                                                      <Link to="/designer/orders" className="text-decoration-none text-reset"><li className="dropdown-item">Designer Orders</li></Link>
+                                                                      authUser.is_admin ?
+                                                                           <Link to="/admin/designers" className="text-decoration-none text-reset"><li className="dropdown-item">Designer List</li></Link>
+                                                                           : null
                                                                  }
-                                                                 <Link to="/cart" className="text-decoration-none text-reset"><li className="dropdown-item">Cart</li></Link>
-                                                                 <Link to="/orders" className="text-decoration-none text-reset"><li className="dropdown-item">Orders</li></Link>
+                                                                 {
+                                                                      authUser.is_designer && authUser.is_approved ?
+                                                                           <Link to="/designer/orders" className="text-decoration-none text-reset"><li className="dropdown-item">Designer Orders</li></Link>
+                                                                           : null
+                                                                 }
+                                                                 {
+                                                                      authUser.is_customer ?
+                                                                           <Fragment>
+                                                                                <Link to="/cart" className="text-decoration-none text-reset"><li className="dropdown-item">Cart</li></Link>
+                                                                                <Link to="/orders" className="text-decoration-none text-reset"><li className="dropdown-item">Orders</li></Link>
+                                                                           </Fragment> : null
+                                                                 }
                                                                  <li onClick={logout} className="dropdown-item" style={{ cursor: "pointer" }}>Logout</li>
                                                             </ul>
                                                        </Fragment>

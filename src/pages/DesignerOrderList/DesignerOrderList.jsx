@@ -1,10 +1,51 @@
+import { useEffect } from "react";
 import { Fragment, useState } from "react";
-import { Gap, Button } from "../../components/atoms";
+import { useHistory } from "react-router";
+import Swal from "sweetalert2";
+import { Gap, Button, Loader } from "../../components/atoms";
 import "./DesignerOrderList.scss";
 
 const DesignerOrderList = () => {
 
-     const [status, setStatus] = useState(1);
+     const urlAPI = process.env.REACT_APP_API_URL;
+     const history = useHistory();
+     const [status, setStatus] = useState(0);
+     const [orders, setOrders] = useState(null);
+     const [isLoading, setIsLoading] = useState(true);
+
+     const fetchOrders = async (token, status) => {
+          const apiFetch = await fetch(urlAPI + `getdesignerorders/${0}?token=${token}`, {
+               method: 'POST',
+          }).catch(err => {
+               console.log(err);
+          });
+          const res = await apiFetch.json();
+          if (res.success) {
+               setOrders(res.detailOrder);
+               return true;
+          } else {
+               console.log(apiFetch.error);
+               return false;
+          }
+     }
+
+     useEffect(() => {
+          window.scrollTo(0, 0);
+          if (!localStorage.getItem('token')) {
+               Swal.fire({ icon: 'error', title: 'error', text: 'Please login first', confirmButtonColor: "#0F70B7" })
+                    .then(() => {
+                         history.push('/');
+                    });
+          } else {
+               setIsLoading(true);
+               fetchOrders(localStorage.getItem('token'), status).then((res) => {
+                    if (res) {
+                         setIsLoading(false)
+                    };
+               });
+          }
+
+     }, [history, status]);
 
      return (
           <Fragment>
@@ -33,42 +74,62 @@ const DesignerOrderList = () => {
                <Gap height={40} />
                <div className="cDesignerOrderListContent">
                     <div className="container-fluid">
-                         <div className="card shadow-sm" style={{ borderRadius: "20px" }}>
-                              <div className="card-body my-4">
-                                   <div className="table-responsive">
-                                        <table className="table table-hover">
-                                             <thead className="bgBlue1 text-white">
-                                                  <tr>
-                                                       <th scope="col">ID</th>
-                                                       <th scope="col">Requestor</th>
-                                                       <th scope="col">Created At</th>
-                                                       <th scope="col">Expected Deadline</th>
-                                                       <th scope="col">Action</th>
-                                                  </tr>
-                                             </thead>
-                                             <tbody>
-                                                  <tr>
-                                                       <td>123</td>
-                                                       <td>A</td>
-                                                       <td>129120192</td>
-                                                       <td>12121212</td>
-                                                       <td>
-                                                            <div className="d-inline-flex" role="group">
-                                                                 <Button type={2} onClick={() => { }}>
-                                                                      <i className="fa fa-eye text-white"></i>
-                                                                 </Button>
-                                                                 <Gap width={20} />
-                                                                 <Button type={2} onClick={() => { }}>
-                                                                      <i class="fas fa-comments"></i>
-                                                                 </Button>
-                                                            </div>
-                                                       </td>
-                                                  </tr>
-                                             </tbody>
-                                        </table>
+                         {
+                              (!isLoading && orders) ?
+                                   <div className="card shadow-sm" style={{ borderRadius: "20px" }}>
+                                        <div className="card-body my-4">
+                                             {
+                                                  orders.length > 0 ?
+                                                       <div className="table-responsive">
+                                                            <table className="table table-hover">
+                                                                 <thead className="bgBlue1 text-white">
+                                                                      <tr>
+                                                                           <th scope="col">ID</th>
+                                                                           <th scope="col">Requestor Name</th>
+                                                                           <th scope="col">Requestor Phone Number</th>
+                                                                           <th scope="col">Requestor Email</th>
+                                                                           <th scope="col">Created At</th>
+                                                                           <th scope="col">Expected Deadline</th>
+                                                                           <th scope="col">Action</th>
+                                                                      </tr>
+                                                                 </thead>
+                                                                 <tbody>
+                                                                      {
+                                                                           orders.map(order => {
+                                                                                return (
+                                                                                     <tr key={order.id}>
+                                                                                          <td>{order.id}</td>
+                                                                                          <td>{order.requestor_name}</td>
+                                                                                          <td>{order.requestor_phone_number}</td>
+                                                                                          <td>{order.requestor_email}</td>
+                                                                                          <td>{order.created_at}</td>
+                                                                                          <td>{order.expected_deadline}</td>
+                                                                                          <td>
+                                                                                               <div className="d-inline-flex" role="group">
+                                                                                                    <Button type={2} onClick={() => { }}>
+                                                                                                         <i className="fa fa-eye text-white"></i>
+                                                                                                    </Button>
+                                                                                                    <Gap width={20} />
+                                                                                                    <Button type={2} onClick={() => { }}>
+                                                                                                         <i class="fas fa-comments"></i>
+                                                                                                    </Button>
+                                                                                               </div>
+                                                                                          </td>
+                                                                                     </tr>
+
+                                                                                )
+                                                                           })
+                                                                      }
+                                                                 </tbody>
+                                                            </table>
+                                                       </div>
+                                                       : <p className="subHeading2 text-center textBlue1">No orders</p>
+                                             }
+                                        </div>
                                    </div>
-                              </div>
-                         </div>
+
+                                   : <Loader isWhite={true} />
+                         }
                     </div>
                </div>
           </Fragment>

@@ -60,9 +60,6 @@ const OrderList = () => {
                                    <Button type={status === 1 ? 2 : 1} onClick={() => setStatus(1)}>
                                         <h4 className="my-3 mx-4">Completed</h4>
                                    </Button>
-                                   <Button type={status === -1 ? 2 : 1} onClick={() => setStatus(-1)}>
-                                        <h4 className="my-3 mx-4">Cancelled</h4>
-                                   </Button>
                               </div>
                          </div>
                     </div>
