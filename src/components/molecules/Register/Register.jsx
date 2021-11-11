@@ -276,20 +276,21 @@ const Register = ({ changeSection }) => {
                                    <Gap height={60} />
                                    <div className="row justify-content-center">
                                         {
-                                             (isDesigner || isCustomer) &&
-                                             <div className="col-md-6 order-md-2">
-                                                  <Button isFull type={2} onClick={handleSelectRole} isLoading={isLoading}>
-                                                       <h5 className="text-white subHeading3 m-1">NEXT</h5>
-                                                  </Button>
-                                             </div>
+                                             (isDesigner || isCustomer) ?
+                                                  <div className="col-md-6 order-md-2">
+                                                       <Button isFull type={2} onClick={handleSelectRole} isLoading={isLoading}>
+                                                            <h5 className="text-white subHeading3 m-1">NEXT</h5>
+                                                       </Button>
+                                                  </div> : null
                                         }
                                         {
-                                             !isLoading &&
-                                             <div className="col-md-6 order-md-1">
-                                                  <Button isFull type={1} onClick={() => setRegisterSection(1)}>
-                                                       <h5 className="subHeading3 m-1">BACK</h5>
-                                                  </Button>
-                                             </div>
+                                             !isLoading ?
+                                                  <div className="col-md-6 order-md-1">
+                                                       <Button isFull type={1} onClick={() => setRegisterSection(1)}>
+                                                            <h5 className="subHeading3 m-1">BACK</h5>
+                                                       </Button>
+                                                  </div>
+                                                  : null
                                         }
                                    </div>
                               </Fragment>

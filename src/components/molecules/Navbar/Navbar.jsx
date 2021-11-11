@@ -61,6 +61,9 @@ const Navbar = () => {
                }
 
                setAuthUser(res.user);
+               if (res.user.is_designer === 1) {
+                    localStorage.setItem('designerId', res.user.id);
+               }
                setIsAuth(true);
           } else {
                setIsAuth(false);
