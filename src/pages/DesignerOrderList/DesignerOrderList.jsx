@@ -81,7 +81,7 @@ const DesignerOrderList = () => {
      }, [history, status]);
 
      const updateDesignerOrderToAPI = async (orderId, status, notes, resultDesign) => {
-          const apiFetch = await fetch(urlAPI + `updatedetailorders/${orderId}?token=${localStorage.getItem('token')}&status=${status}$notes=${notes}&result_design=${resultDesign}`, {
+          const apiFetch = await fetch(urlAPI + `updatedetailorders/${orderId}?token=${localStorage.getItem('token')}&status=${status}&notes=${notes}&result_design=${resultDesign}`, {
                method: 'POST',
           }).catch(err => {
                console.log(err);
@@ -160,6 +160,7 @@ const DesignerOrderList = () => {
 
           if (!submitDesign) setErrSubmitDesign("Submit design link must be filled");
           else {
+               setButtonLoading(true);
                updateDesignerOrderToAPI(orderId, 3, "", submitDesign)
                     .then((res) => {
                          setButtonLoading(false);
@@ -312,11 +313,13 @@ const DesignerOrderList = () => {
                                                                  <Input label="Deadline" value={new Date(order.deadline).toLocaleString('en-US', { day: "numeric", month: "long", year: "numeric" })} disabled />
                                                                  <Gap height={20} />
                                                                  <Input label="Price" value={new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR' }).format(order.price)} disabled />
+                                                                 <Gap height={20} />
+                                                                 <Input label="Notes" value={order.notes} disabled />
                                                                  {
-                                                                      order.status === 1 || order.status === 2 ?
+                                                                      order.status !== "0" ?
                                                                            <Fragment>
                                                                                 <Gap height={20} />
-                                                                                <Input label="Submit Design" value={submitDesign} onChange={(e) => { setSubmitDesign(e.target.value); setErrSubmitDesign('') }} error={errSubmitDesign} />
+                                                                                <Input label="Submit Design" value={submitDesign} onChange={(e) => { setSubmitDesign(e.target.value); setErrSubmitDesign('') }} error={errSubmitDesign} disabled={order.status === "3"} />
                                                                            </Fragment>
                                                                            : null
                                                                  }
@@ -335,9 +338,9 @@ const DesignerOrderList = () => {
                                                                                      </Button>
                                                                                 </div>
                                                                            </div>
-                                                                           : <Button isFull type={2} isLoading={buttonLoading} onClick={() => handleSubmitDesign(order.id)}>
+                                                                           : (order.status !== "3") ? <Button isFull type={2} isLoading={buttonLoading} onClick={() => handleSubmitDesign(order.id)}>
                                                                                 <h5 className="subHeading3 my-1">Submit Design</h5>
-                                                                           </Button>
+                                                                           </Button> : null
                                                                  }
                                                             </Fragment>
                                                             : <Loader isWhite={false} />

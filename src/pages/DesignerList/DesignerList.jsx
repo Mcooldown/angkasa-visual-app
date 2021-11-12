@@ -13,6 +13,7 @@ const DesignerList = () => {
      const [designers, setDesigners] = useState(null);
      const [products, setProducts] = useState(null);
      const [isLoading, setIsLoading] = useState(true);
+     const [buttonLoading, setButtonLoading] = useState(false);
 
      const [designerId, setDesignerId] = useState('');
      const [productId, setProductId] = useState(0);
@@ -39,20 +40,20 @@ const DesignerList = () => {
 
      const fetchDesignerProducts = async (id) => {
 
-          // const apiFetch = await fetch(urlAPI + `getdesignerswithdetailskill?token=${localStorage.getItem('token')}`, {
-          //      method: 'POST',
-          // }).catch(err => {
-          //      console.log(err);
-          // });
-          // const res = await apiFetch.json();
+          const apiFetch = await fetch(urlAPI + `getdesignerswithdetailskill/${id}?token=${localStorage.getItem('token')}`, {
+               method: 'POST',
+          }).catch(err => {
+               console.log(err);
+          });
+          const res = await apiFetch.json();
 
-          // if (res.success) {
-          //      // setProducts(res.product);
-          //      return true;
-          // } else {
-          //      console.log(apiFetch.error);
-          //      return false;
-          // }
+          if (res.success) {
+               setDesignerProducts(res.designers);
+               return true;
+          } else {
+               console.log(apiFetch.error);
+               return false;
+          }
      }
 
      const fetchDesigners = async (token) => {
@@ -80,6 +81,7 @@ const DesignerList = () => {
           const res = await apiFetch.json();
           if (res.success) {
                fetchDesigners(localStorage.getItem('token'));
+               fetchDesignerProducts(designerId);
                return true;
           } else {
                console.log(apiFetch.error);
@@ -88,13 +90,43 @@ const DesignerList = () => {
      }
 
      const handleUpdateDesigner = (designerId, productId, isApprove) => {
+          setButtonLoading(true)
           updateDesignerToAPI(designerId, productId, isApprove).then(() => {
+               setButtonLoading(false);
                Swal.fire({ icon: 'success', 'title': 'Success', confirmButtonColor: "#0F70B7" })
                     .then(() => {
                          setIsAdd(false);
                          fetchDesigners();
                     })
           })
+     }
+
+     const deleteDesignerProductToAPI = async (id) => {
+          const apiFetch = await fetch(urlAPI + `deletedetailskill?id=${id}&token=${localStorage.getItem('token')}`, {
+               method: 'POST',
+          }).catch(err => {
+               console.log(err);
+          });
+          const res = await apiFetch.json();
+          if (res.success) {
+               return true;
+          } else {
+               console.log(apiFetch.error);
+               return false;
+          }
+     }
+
+     const handleDeleteDesignerProduct = (id) => {
+
+          deleteDesignerProductToAPI(id)
+               .then((res) => {
+                    if (res) {
+                         Swal.fire({ icon: 'success', 'title': 'Success', text: "Success delete assigned product", confirmButtonColor: "#0F70B7" })
+                         fetchDesignerProducts(designerId);
+                    } else {
+                         Swal.fire({ icon: 'error', 'title': 'Error', text: "Error while deleting assigned product", confirmButtonColor: "#0F70B7" })
+                    }
+               });
      }
 
      useEffect(() => {
@@ -247,7 +279,7 @@ const DesignerList = () => {
                                                   <div className="d-flex justify-content-end">
                                                        <Button type={1} onClick={() => setIsAdd(false)}>Cancel</Button>
                                                        <Gap width={10} />
-                                                       <Button type={2} onClick={() => handleUpdateDesigner(designerId, productId, 1)}>
+                                                       <Button type={2} isLoading={buttonLoading} onClick={() => handleUpdateDesigner(designerId, productId, 1)}>
                                                             Assign
                                                        </Button>
                                                   </div>
@@ -255,7 +287,7 @@ const DesignerList = () => {
                                              :
                                              <Button type={2} onClick={() => setIsAdd(true)}><i className="fa fa-plus text-white"></i> Assign Product to Designer</Button>
                                    }
-                                   {/* {
+                                   {
                                         designerProducts ?
                                              <Fragment>
                                                   {
@@ -270,6 +302,7 @@ const DesignerList = () => {
                                                                                      <th>Product ID</th>
                                                                                      <th>Product Category</th>
                                                                                      <th>Product Name</th>
+                                                                                     <th>Action</th>
                                                                                 </tr>
                                                                            </thead>
                                                                            <tbody>
@@ -281,6 +314,13 @@ const DesignerList = () => {
                                                                                                     <td>{designerProduct.product_id}</td>
                                                                                                     <td>{designerProduct.product_category}</td>
                                                                                                     <td>{designerProduct.product_name}</td>
+                                                                                                    <td>
+                                                                                                         <div className="d-inline-flex" role="group">
+                                                                                                              <Button type={2} onClick={() => handleDeleteDesignerProduct(designerProduct.detail_skills_id)}>
+                                                                                                                   <i className="fa fa-trash text-white"></i> Delete
+                                                                                                              </Button>
+                                                                                                         </div>
+                                                                                                    </td>
                                                                                                </tr>
                                                                                           )
                                                                                      })
@@ -289,11 +329,15 @@ const DesignerList = () => {
                                                                       </table>
                                                                  </div>
                                                             </Fragment>
-                                                            : <p className="subHeading2 textBlue1 text-center">No assigned product for this designer</p>
+                                                            :
+                                                            <Fragment>
+                                                                 <Gap height={50} />
+                                                                 <p className="paragraph textBlue1 text-center">No assigned product for this designer</p>
+                                                            </Fragment>
                                                   }
                                              </Fragment>
                                              : <Loader isWhite={false} />
-                                   } */}
+                                   }
                               </div>
                          </div>
                     </div>
