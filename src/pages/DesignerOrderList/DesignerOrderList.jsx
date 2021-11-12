@@ -89,11 +89,13 @@ const DesignerOrderList = () => {
           const res = await apiFetch.json();
 
           if (res.success) {
+               setSubmitDesign(null);
                return true;
           } else {
                console.log(apiFetch.error);
                return false;
           }
+
      }
 
      const updateAssignedDesignerToAPI = async (orderId, designerId) => {
