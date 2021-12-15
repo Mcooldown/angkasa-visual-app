@@ -47,11 +47,11 @@ const Navbar = () => {
           const res = await apiFetch.json();
           if (res.user) {
                let pass = true;
-               if (location.pathname === '/admin/designers' && res.user.is_admin === 0 ||
-                    location.pathname === '/cart' && res.user.is_customer === 0 ||
-                    location.pathname === '/orders' && res.user.is_customer === 0 ||
-                    location.pathname === '/checkout' && res.user.is_customer === 0 ||
-                    location.pathname === '/designer/orders' && res.user.is_designer === 0) {
+               if ((location.pathname === '/admin/designers' && res.user.is_admin === 0) ||
+                    (location.pathname === '/cart' && res.user.is_customer === 0) ||
+                    (location.pathname === '/orders' && res.user.is_customer === 0) ||
+                    (location.pathname === '/checkout' && res.user.is_customer === 0) ||
+                    (location.pathname === '/designer/orders' && res.user.is_designer === 0)) {
                     pass = false;
                }
 
@@ -104,9 +104,9 @@ const Navbar = () => {
                                                   {
                                                        authUser &&
                                                        <Fragment>
-                                                            <a className="textBlue1 text-decoration-none dropdown-toggle pe-lg-5" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <div className="textBlue1 text-decoration-none dropdown-toggle pe-lg-5" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                                  {authUser.name}
-                                                            </a>
+                                                            </div>
                                                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                                                                  {
                                                                       authUser.is_admin ?

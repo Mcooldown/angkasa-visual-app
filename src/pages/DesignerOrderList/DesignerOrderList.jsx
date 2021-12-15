@@ -95,7 +95,6 @@ const DesignerOrderList = () => {
                console.log(apiFetch.error);
                return false;
           }
-
      }
 
      const updateAssignedDesignerToAPI = async (orderId, designerId) => {
@@ -176,6 +175,10 @@ const DesignerOrderList = () => {
           }
      }
 
+     const handleContact = (orderId, designerId) => {
+          history.push(`/chat/${orderId}/${designerId}`);
+     }
+
      return (
           <Fragment>
                <div className="cDesignerOrderListHeader">
@@ -245,9 +248,10 @@ const DesignerOrderList = () => {
                                                                                                               : null
                                                                                                     }
                                                                                                     {
-                                                                                                         order.status === 1 && order.status === 2 ?
+                                                                                                         (order.status === "1" || order.status === "2") ?
                                                                                                               <Fragment>
-                                                                                                                   <Button type={2} onClick={() => { }}>
+                                                                                                                   <Gap width={10} />
+                                                                                                                   <Button type={2} onClick={() => handleContact(order.id, localStorage.getItem('designerId'))}>
                                                                                                                         <i class="fas fa-comments"></i>
                                                                                                                    </Button>
                                                                                                               </Fragment>

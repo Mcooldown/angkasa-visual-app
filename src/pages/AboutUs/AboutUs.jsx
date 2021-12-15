@@ -22,7 +22,7 @@ const AboutUs = () => {
                               </div>
                               <div className="col-lg-5 my-3">
                                    <h1 className="heading1 textBlue1">ABOUT US</h1>
-                                   <p className="paragraph textBlue1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis urna laoreet commodo scelerisque at sem. Vestibulum fringilla at duis proin aliquam facilisi tempor. In nunc diam lorem id arcu amet.</p>
+                                   <p className="paragraph textBlue1">Angkasa Visual Works is a digital platform that provides digital design, video creation and editing, also UI/ UX design services in high-quality results, yet at standardized prices.</p>
                               </div>
                          </div>
                     </div>

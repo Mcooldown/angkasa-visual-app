@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import "./Home.scss";
 import { Button, Gap } from "../../components/atoms";
-import { LandingIllust, Send, Why1, Why2, Why3 } from "../../assets";
+import { HoodieDesign, LandingIllust, PhotoEditing, Send, TShirtDesign, UIDesign, VideoEditing, Why1, Why2, Why3 } from "../../assets";
 import WorkCard from "../../components/molecules/WorkCard/WorkCard";
 import OwlCarousel from 'react-owl-carousel2';
 import { useEffect } from "react";
@@ -34,9 +34,9 @@ const Home = () => {
                <div className="cLanding">
                     <div className="cLandingContent container-fluid row justify-content-between align-items-center">
                          <div className="col-lg-6">
-                              <h1 className="title text-white">Fly To The Moon with Our Services</h1>
+                              <h1 className="title text-white">With Us, There is no Limit for Creativity</h1>
                               <p className="paragraph text-white">
-                                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis urna laoreet commodo scelerisque at sem. Vestibulum fringilla at duis proin aliquam facilisi tempor. In nunc diam lorem id arcu amet.
+                                   Angkasa Visual Works is a digital platform that provides digital design, video creation and editing, also UI/ UX design services in high-quality results, yet at standardized prices.
                               </p>
                               <Gap height={20} />
                               <Button type={1}>
@@ -55,11 +55,11 @@ const Home = () => {
                     <h1 className="title textBlue1 text-center">Our Recent Works</h1>
                     <Gap height={50} />
                     <OwlCarousel options={optionsRecentWorks}>
-                         <WorkCard key={1} title="Work 1" description="halo halo binusian halo halo binusian halo halo binusian" />
-                         <WorkCard key={2} title="Work 2" description="halo halo binusian halo halo binusian halo halo binusian" />
-                         <WorkCard key={3} title="Work 3" description="halo halo binusian halo halo binusian halo halo binusian" />
-                         <WorkCard key={4} title="Work 4" description="halo halo binusian halo halo binusian halo halo binusian" />
-                         <WorkCard key={5} title="Work 5" description="halo halo binusian halo halo binusian halo halo binusian" />
+                         <WorkCard key={1} title="Hoodie Design" image={HoodieDesign} description="Make your own hoodie design" />
+                         <WorkCard key={2} title="Photo Editing" image={PhotoEditing} description="Make your own photo editing" />
+                         <WorkCard key={3} title="T-Shirt Design" image={TShirtDesign} description="Make your own t-Shirt design" />
+                         <WorkCard key={4} title="UI Design" image={UIDesign} description="Make your own UI design" />
+                         <WorkCard key={5} title="Video Editing" image={VideoEditing} description="Make your own video editing" />
                     </OwlCarousel>
                </div>
                <div className="cWhyAngkasa">

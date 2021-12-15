@@ -17,7 +17,13 @@ import VideoAnimation from "./images/videoAnimation.png";
 import DesignerSymbol from "./images/designerSymbol.png";
 import CustomerSymbol from "./images/customerSymbol.png";
 import RegisterSuccess from "./images/registerSuccess.png";
+import HoodieDesign from "./images/hoodieDesign.png";
+import PhotoEditing from "./images/photoEditing.png";
+import TShirtDesign from "./images/tShirtDesign.png";
+import UIDesign from "./images/uiDesign.png";
+import VideoEditing from "./images/videoEditing.png";
 
 export {Logo, LandingIllust, Sample, Why1, Why2, Why3, Send,
 Adie, Michele, Vincent, Putu, Kathleen, DefaultProfile,
-GraphicDesign, TechDesign, VideoAnimation, DesignerSymbol, CustomerSymbol, RegisterSuccess};
+GraphicDesign, TechDesign, VideoAnimation, DesignerSymbol, CustomerSymbol, RegisterSuccess,
+HoodieDesign, PhotoEditing, TShirtDesign, UIDesign, VideoEditing};

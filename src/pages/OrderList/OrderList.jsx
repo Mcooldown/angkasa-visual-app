@@ -74,8 +74,8 @@ const OrderList = () => {
                })
      }
 
-     const handleContact = (id) => {
-
+     const handleContact = (orderId, designerId) => {
+          history.push(`/chat/${orderId}/${designerId}`);
      }
 
      return (
@@ -111,7 +111,7 @@ const OrderList = () => {
                                              orders.length > 0 ? orders.map(order => {
                                                   return (
                                                        <TransactionItem designer={order.designer_name} image={order.product_image} packageName={order.package_name} price={new Intl.NumberFormat('ban-ID', { style: 'currency', currency: 'IDR' }).format(order.price)} productName={order.product_name}
-                                                            quantity={order.quantity} status={status} handleRevise={() => handleRevise(order.id)} handleContact={() => handleContact(order.id)} result={""} />
+                                                            quantity={order.quantity} status={status} handleRevise={() => handleRevise(order.id)} handleContact={() => handleContact(order.id, order.designer_id)} result={""} />
                                                   )
                                              })
                                                   : <p className="subHeading3 text-center text-white">No orders</p>
